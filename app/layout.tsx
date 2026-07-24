@@ -22,7 +22,10 @@ export const metadata: Metadata = {
     "Crie currículo profissional e treine entrevistas por voz no celular, com preparação adaptada à vaga e guias gratuitos para todo o Brasil.",
   alternates: { canonical: "/" },
   verification: {
-    google: "4qn2wjN3WFlEzJ6kWFpFTQb66V-cDMIYHSuZmb7fI60",
+    google: [
+      "4qn2wjN3WFlEzJ6kWFpFTQb66V-cDMIYHSuZmb7fI60",
+      "WMR9Cf62VXVgP476h_vRLPHrPuJMGJA0adWVdzjl4w4",
+    ],
   },
   icons: {
     icon: "/favicon.svg",
