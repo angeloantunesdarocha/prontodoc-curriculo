@@ -30,7 +30,7 @@ export default async function GuidePage({ params }: PageProps) {
   const { slug } = await params;
   const guide = getGuide(slug);
   if (!guide) notFound();
-  const url = `https://prontodoc-curriculo.angeloantunesdarocha.chatgpt.site/guias/${guide.slug}`;
+  const url = `https://prontodoc-curriculo.vercel.app/guias/${guide.slug}`;
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -40,7 +40,7 @@ export default async function GuidePage({ params }: PageProps) {
     dateModified: "2026-07-24",
     inLanguage: "pt-BR",
     mainEntityOfPage: url,
-    author: { "@type": "Organization", name: "ProntoDoc", url: "https://prontodoc-curriculo.angeloantunesdarocha.chatgpt.site" },
+    author: { "@type": "Organization", name: "ProntoDoc", url: "https://prontodoc-curriculo.vercel.app" },
     publisher: { "@type": "Organization", name: "ProntoDoc" },
   };
   const faqJsonLd = {

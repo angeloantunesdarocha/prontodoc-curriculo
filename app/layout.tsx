@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://prontodoc-curriculo.angeloantunesdarocha.chatgpt.site"),
+  metadataBase: new URL("https://prontodoc-curriculo.vercel.app"),
   title: {
     default: "ProntoDoc — Currículo profissional pelo celular",
     template: "%s | ProntoDoc",
@@ -23,9 +23,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   verification: {
     google: "4qn2wjN3WFlEzJ6kWFpFTQb66V-cDMIYHSuZmb7fI60",
-  },
-  other: {
-    "codex-preview": "development",
   },
   icons: {
     icon: "/favicon.svg",
@@ -50,7 +47,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "ProntoDoc",
-              url: "https://prontodoc-curriculo.angeloantunesdarocha.chatgpt.site",
+              url: "https://prontodoc-curriculo.vercel.app",
               email: "angeloantunesdarocha@gmail.com",
             }),
           }}

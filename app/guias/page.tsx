@@ -16,7 +16,7 @@ export default function GuidesPage() {
     itemListElement: guides.map((guide, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      url: `https://prontodoc-curriculo.angeloantunesdarocha.chatgpt.site/guias/${guide.slug}`,
+      url: `https://prontodoc-curriculo.vercel.app/guias/${guide.slug}`,
       name: guide.title,
     })),
   };

@@ -1,6 +1,6 @@
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://prontodoc-curriculo.angeloantunesdarocha.chatgpt.site"
+  "https://prontodoc-curriculo.vercel.app"
 ).replace(/\/+$/, "");
 
 export const plans = {

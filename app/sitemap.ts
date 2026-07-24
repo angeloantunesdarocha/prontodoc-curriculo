@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { guides } from "./guias/data";
 
-const baseUrl = "https://prontodoc-curriculo.angeloantunesdarocha.chatgpt.site";
+const baseUrl = "https://prontodoc-curriculo.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
