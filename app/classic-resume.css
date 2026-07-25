@@ -11,6 +11,11 @@
   background: #fff !important;
 }
 
+/* Marca-d'água exclusiva da versão gratuita, um pouco mais visível sem prejudicar a leitura. */
+.free-watermark .watermark-text {
+  color: rgba(11, 85, 245, .17) !important;
+}
+
 .resume-header {
   border-bottom: 0 !important;
   display: block !important;
@@ -316,7 +321,7 @@
   }
 
   body.resume-print-active .watermark-text {
-    color: rgba(11, 85, 245, .10) !important;
+    color: rgba(11, 85, 245, .16) !important;
     font-size: 38pt !important;
   }
 }
