@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "./voice-print-fixes.css";
+import VoiceFieldEnhancer from "./VoiceFieldEnhancer";
 import {
   AUTHOR_NAME,
   SITE_DESCRIPTION,
@@ -174,6 +176,7 @@ export default function RootLayout({
             dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
           />
         ))}
+        <VoiceFieldEnhancer />
         {children}
         <footer
           aria-label="Informações e áreas do ProntoDoc"
