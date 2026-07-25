@@ -40,6 +40,7 @@ type RegisteredField = {
 const ALLOWED_INPUT_TYPES = new Set(["text", "email", "tel", "search", "url"]);
 
 function isEditableField(element: Element): element is EditableField {
+  if (element.hasAttribute("data-no-voice")) return false;
   if (element instanceof HTMLTextAreaElement) return !element.disabled && !element.readOnly;
   if (!(element instanceof HTMLInputElement)) return false;
   return ALLOWED_INPUT_TYPES.has(element.type || "text") && !element.disabled && !element.readOnly;
