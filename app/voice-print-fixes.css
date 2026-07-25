@@ -1,0 +1,226 @@
+.voice-field-parent {
+  position: relative !important;
+}
+
+.voice-field-input {
+  padding-right: 54px !important;
+}
+
+.field-mic-button {
+  align-items: center;
+  background: #eef5ff;
+  border: 1px solid #8db4f8;
+  border-radius: 10px;
+  color: #0b55f5;
+  display: inline-flex;
+  font-size: 17px;
+  height: 38px;
+  justify-content: center;
+  line-height: 1;
+  min-height: 38px;
+  padding: 0;
+  position: absolute;
+  transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+  width: 38px;
+  z-index: 6;
+}
+
+.field-mic-button:hover,
+.field-mic-button:focus-visible {
+  background: #dfeaff;
+  border-color: #0b55f5;
+  transform: scale(1.05);
+}
+
+.field-mic-button.is-listening {
+  animation: prontodoc-mic-pulse 1.1s ease-in-out infinite;
+  background: #b42318;
+  border-color: #b42318;
+  color: #fff;
+}
+
+.voice-field-notice {
+  background: #071a40;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 14px;
+  bottom: 18px;
+  box-shadow: 0 18px 45px rgba(7, 26, 64, .28);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 750;
+  left: 50%;
+  line-height: 1.45;
+  margin: 0;
+  max-width: min(560px, calc(100vw - 28px));
+  padding: 14px 18px;
+  position: fixed;
+  text-align: center;
+  transform: translateX(-50%);
+  width: max-content;
+  z-index: 1000;
+}
+
+@keyframes prontodoc-mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(180, 35, 24, .35); }
+  50% { box-shadow: 0 0 0 8px rgba(180, 35, 24, 0); }
+}
+
+@media (max-width: 560px) {
+  .field-mic-button {
+    height: 40px;
+    min-height: 40px;
+    width: 40px;
+  }
+
+  .voice-field-input {
+    padding-right: 58px !important;
+  }
+
+  .voice-field-notice {
+    bottom: 86px;
+    font-size: 13px;
+  }
+}
+
+@media print {
+  @page {
+    margin: 12mm;
+    size: A4 portrait;
+  }
+
+  body.resume-print-active,
+  body.resume-print-active > main {
+    background: #fff !important;
+    height: auto !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  body.resume-print-active * {
+    visibility: visible !important;
+  }
+
+  body.resume-print-active > :not(main),
+  body.resume-print-active > main > :not(.builder),
+  body.resume-print-active > main > .builder > :not(.builder-grid),
+  body.resume-print-active > main > .builder > .builder-grid > :not(.builder-preview),
+  body.resume-print-active .builder-preview > :not(.resume-sheet),
+  body.resume-print-active .field-mic-button,
+  body.resume-print-active .voice-field-notice {
+    display: none !important;
+  }
+
+  body.resume-print-active > main > .builder,
+  body.resume-print-active > main > .builder > .builder-grid,
+  body.resume-print-active > main > .builder > .builder-grid > .builder-preview {
+    background: #fff !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    display: block !important;
+    height: auto !important;
+    margin: 0 !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    top: auto !important;
+    width: 100% !important;
+  }
+
+  body.resume-print-active .builder-preview .resume-sheet {
+    background: #fff !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #17233b !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5mm !important;
+    justify-content: space-between !important;
+    margin: 0 !important;
+    min-height: 273mm !important;
+    padding: 10mm 9mm !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+    page-break-inside: auto !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+    width: 100% !important;
+  }
+
+  body.resume-print-active .resume-header {
+    border-bottom: 2.2pt solid #0b55f5 !important;
+    gap: 6mm !important;
+    padding-bottom: 5mm !important;
+  }
+
+  body.resume-print-active .resume-header h3 {
+    font-size: 22pt !important;
+    line-height: 1.15 !important;
+    margin: 0 0 2.2mm !important;
+  }
+
+  body.resume-print-active .resume-header p {
+    font-size: 10.5pt !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
+  }
+
+  body.resume-print-active .resume-photo {
+    border-width: 2pt !important;
+    height: 32mm !important;
+    width: 27mm !important;
+  }
+
+  body.resume-print-active .resume-sheet section {
+    break-inside: avoid-page !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.resume-print-active .resume-sheet h4 {
+    color: #0b3c9e !important;
+    font-size: 13pt !important;
+    line-height: 1.25 !important;
+    margin: 0 0 3mm !important;
+  }
+
+  body.resume-print-active .resume-sheet h4::after {
+    background: #9fb8db !important;
+  }
+
+  body.resume-print-active .resume-sheet p {
+    font-size: 11.5pt !important;
+    line-height: 1.55 !important;
+    margin: 1.2mm 0 !important;
+    orphans: 3;
+    widows: 3;
+  }
+
+  body.resume-print-active .skill-list {
+    gap: 2.4mm !important;
+  }
+
+  body.resume-print-active .skill-list span {
+    border-color: #78a5ef !important;
+    font-size: 10pt !important;
+    padding: 1.7mm 2.5mm !important;
+  }
+
+  body.resume-print-active .watermark-text {
+    color: rgba(11, 85, 245, .13) !important;
+    font-size: 42pt !important;
+    left: 50% !important;
+    position: absolute !important;
+    top: 50% !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field-mic-button.is-listening {
+    animation: none;
+  }
+}
