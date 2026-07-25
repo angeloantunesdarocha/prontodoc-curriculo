@@ -1,17 +1,20 @@
 import { guides } from "../guias/catalog";
 import { CONTENT_UPDATED_AT, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "../site";
 
+const xmlEntities: Record<string, string> = {
+  "<": "&lt;",
+  ">": "&gt;",
+  "&": "&amp;",
+  "'": "&apos;",
+  '"': "&quot;",
+};
+
 function escapeXml(value: string) {
-  return value.replace(/[<>&'\"]/g, (character) => ({
-    "<": "&lt;",
-    ">": "&gt;",
-    "&": "&amp;",
-    "'": "&apos;",
-    '"': "&quot;",
-  })[character] || character);
+  return value.replace(/[<>&'\"]/g, (character) => xmlEntities[character] || character);
 }
 
 export async function GET() {
+  const publicationDate = new Date(`${CONTENT_UPDATED_AT}T12:00:00-03:00`).toUTCString();
   const items = guides
     .map((guide) => {
       const url = `${SITE_URL}/guias/${guide.slug}`;
@@ -22,7 +25,7 @@ export async function GET() {
           <guid isPermaLink="true">${url}</guid>
           <description>${escapeXml(guide.description)}</description>
           <category>${escapeXml(guide.category)}</category>
-          <pubDate>${new Date(`${CONTENT_UPDATED_AT}T12:00:00-03:00`).toUTCString()}</pubDate>
+          <pubDate>${publicationDate}</pubDate>
         </item>`;
     })
     .join("");
@@ -34,7 +37,7 @@ export async function GET() {
         <link>${SITE_URL}/guias</link>
         <description>${escapeXml(SITE_DESCRIPTION)}</description>
         <language>pt-BR</language>
-        <lastBuildDate>${new Date(`${CONTENT_UPDATED_AT}T12:00:00-03:00`).toUTCString()}</lastBuildDate>
+        <lastBuildDate>${publicationDate}</lastBuildDate>
         <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml" />
         ${items}
       </channel>
