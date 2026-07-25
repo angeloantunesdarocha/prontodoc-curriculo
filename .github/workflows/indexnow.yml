@@ -1,0 +1,49 @@
+name: Notificar buscadores com IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "public/**"
+      - "scripts/submit-indexnow.mjs"
+      - ".github/workflows/indexnow.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow-production
+  cancel-in-progress: true
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Aguardar sitemap publicado na Vercel
+        shell: bash
+        run: |
+          for attempt in {1..20}; do
+            if curl --fail --silent --show-error "https://prontodoc-curriculo.vercel.app/sitemap.xml" > /dev/null; then
+              echo "Sitemap disponível."
+              exit 0
+            fi
+            echo "Tentativa ${attempt}/20: aguardando publicação..."
+            sleep 15
+          done
+          echo "O sitemap não ficou disponível no período de verificação."
+          exit 1
+
+      - name: Enviar URLs ao IndexNow
+        env:
+          SITE_URL: https://prontodoc-curriculo.vercel.app
+        run: node scripts/submit-indexnow.mjs
