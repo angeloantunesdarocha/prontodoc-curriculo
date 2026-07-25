@@ -1,0 +1,322 @@
+/* Currículo clássico inspirado no modelo tradicional enviado pelo usuário. */
+.resume-sheet {
+  background: #fff !important;
+  color: #111 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  min-height: 720px;
+  padding: 48px 54px !important;
+}
+
+.resume-sheet.visual-resume {
+  background: #fff !important;
+}
+
+.resume-header {
+  border-bottom: 0 !important;
+  display: block !important;
+  min-height: 132px;
+  padding: 0 132px 18px 0 !important;
+  position: relative;
+}
+
+.resume-header > div {
+  min-width: 0;
+}
+
+.resume-header h3 {
+  color: #111 !important;
+  font-size: clamp(30px, 3.4vw, 42px) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.15 !important;
+  margin: 0 0 28px !important;
+  text-align: center;
+}
+
+.resume-header p {
+  color: #111 !important;
+  font-size: 14px !important;
+  line-height: 1.48 !important;
+  margin: 0 !important;
+  max-width: 620px;
+  overflow-wrap: anywhere;
+}
+
+.resume-photo {
+  border: 1px solid #86634d !important;
+  border-radius: 0 !important;
+  height: 126px !important;
+  object-fit: cover;
+  position: absolute;
+  right: 0;
+  top: 34px;
+  width: 104px !important;
+}
+
+.resume-sheet section {
+  margin-top: 22px !important;
+}
+
+.resume-sheet h4 {
+  color: #111 !important;
+  display: block !important;
+  font-size: 21px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.2 !important;
+  margin: 0 0 12px !important;
+}
+
+.resume-sheet h4::after {
+  display: none !important;
+}
+
+.resume-sheet p {
+  color: #111 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  margin: 4px 0 !important;
+  white-space: pre-wrap;
+}
+
+/* Objetivo no mesmo recuo do modelo de referência. */
+.resume-sheet section:nth-of-type(1) > p {
+  padding-left: 44px;
+}
+
+/* Formação com marcador tradicional. */
+.resume-sheet section:nth-of-type(2) > p {
+  padding-left: 70px;
+  position: relative;
+}
+
+.resume-sheet section:nth-of-type(2) > p::before {
+  content: "•";
+  font-size: 20px;
+  left: 34px;
+  line-height: 1;
+  position: absolute;
+  top: 1px;
+}
+
+/* Histórico profissional em blocos: linha principal em negrito e descrição recuada. */
+.resume-sheet section:nth-of-type(3) > p {
+  padding-left: 64px;
+  position: relative;
+}
+
+.resume-sheet section:nth-of-type(3) > p:nth-of-type(odd) {
+  font-weight: 750;
+  margin-top: 14px !important;
+  padding-left: 70px;
+}
+
+.resume-sheet section:nth-of-type(3) > p:nth-of-type(odd)::before {
+  content: "•";
+  font-size: 20px;
+  font-weight: 400;
+  left: 34px;
+  line-height: 1;
+  position: absolute;
+  top: 1px;
+}
+
+/* Habilidades como lista, sem etiquetas coloridas. */
+.skill-list {
+  display: block !important;
+  padding-left: 70px;
+}
+
+.skill-list span {
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: #111 !important;
+  display: list-item !important;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+  list-style-type: disc;
+  margin: 3px 0;
+  padding: 0 !important;
+}
+
+@media (max-width: 560px) {
+  .resume-sheet {
+    min-height: 600px;
+    padding: 30px 24px !important;
+  }
+
+  .resume-header {
+    min-height: 116px;
+    padding-right: 92px !important;
+  }
+
+  .resume-header h3 {
+    font-size: 27px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .resume-header p,
+  .resume-sheet p,
+  .skill-list span {
+    font-size: 12px !important;
+  }
+
+  .resume-photo {
+    height: 100px !important;
+    top: 28px;
+    width: 78px !important;
+  }
+
+  .resume-sheet h4 {
+    font-size: 18px !important;
+  }
+
+  .resume-sheet section:nth-of-type(1) > p {
+    padding-left: 24px;
+  }
+
+  .resume-sheet section:nth-of-type(2) > p,
+  .resume-sheet section:nth-of-type(3) > p,
+  .resume-sheet section:nth-of-type(3) > p:nth-of-type(odd),
+  .skill-list {
+    padding-left: 38px;
+  }
+
+  .resume-sheet section:nth-of-type(2) > p::before,
+  .resume-sheet section:nth-of-type(3) > p:nth-of-type(odd)::before {
+    left: 14px;
+  }
+}
+
+@media print {
+  @page {
+    margin: 14mm 15mm;
+    size: A4 portrait;
+  }
+
+  body.resume-print-active .builder-preview .resume-sheet {
+    background: #fff !important;
+    color: #000 !important;
+    display: block !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    gap: 0 !important;
+    justify-content: initial !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  body.resume-print-active .resume-header {
+    border: 0 !important;
+    display: block !important;
+    min-height: 36mm !important;
+    padding: 0 35mm 5mm 0 !important;
+    position: relative !important;
+  }
+
+  body.resume-print-active .resume-header h3 {
+    color: #000 !important;
+    font-size: 25pt !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    line-height: 1.15 !important;
+    margin: 0 0 8mm !important;
+    text-align: center !important;
+  }
+
+  body.resume-print-active .resume-header p {
+    color: #000 !important;
+    font-size: 10.5pt !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    max-width: 145mm !important;
+  }
+
+  body.resume-print-active .resume-photo {
+    border: .7pt solid #86634d !important;
+    border-radius: 0 !important;
+    height: 35mm !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 16mm !important;
+    width: 29mm !important;
+  }
+
+  body.resume-print-active .resume-sheet section {
+    break-inside: avoid-page !important;
+    margin: 5.5mm 0 0 !important;
+    padding: 0 !important;
+  }
+
+  body.resume-print-active .resume-sheet h4 {
+    color: #000 !important;
+    display: block !important;
+    font-size: 14pt !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    margin: 0 0 3mm !important;
+  }
+
+  body.resume-print-active .resume-sheet h4::after {
+    display: none !important;
+  }
+
+  body.resume-print-active .resume-sheet p {
+    color: #000 !important;
+    font-size: 10.8pt !important;
+    line-height: 1.42 !important;
+    margin: 1mm 0 !important;
+    orphans: 3;
+    widows: 3;
+  }
+
+  body.resume-print-active .resume-sheet section:nth-of-type(1) > p {
+    padding-left: 12mm !important;
+  }
+
+  body.resume-print-active .resume-sheet section:nth-of-type(2) > p {
+    padding-left: 19mm !important;
+  }
+
+  body.resume-print-active .resume-sheet section:nth-of-type(2) > p::before {
+    font-size: 15pt !important;
+    left: 9mm !important;
+  }
+
+  body.resume-print-active .resume-sheet section:nth-of-type(3) > p {
+    padding-left: 17mm !important;
+  }
+
+  body.resume-print-active .resume-sheet section:nth-of-type(3) > p:nth-of-type(odd) {
+    font-weight: 750 !important;
+    margin-top: 3.5mm !important;
+    padding-left: 19mm !important;
+  }
+
+  body.resume-print-active .resume-sheet section:nth-of-type(3) > p:nth-of-type(odd)::before {
+    font-size: 15pt !important;
+    left: 9mm !important;
+  }
+
+  body.resume-print-active .skill-list {
+    display: block !important;
+    padding-left: 19mm !important;
+  }
+
+  body.resume-print-active .skill-list span {
+    border: 0 !important;
+    color: #000 !important;
+    display: list-item !important;
+    font-size: 10.5pt !important;
+    line-height: 1.4 !important;
+    list-style-type: disc !important;
+    margin: .8mm 0 !important;
+    padding: 0 !important;
+  }
+
+  body.resume-print-active .watermark-text {
+    color: rgba(11, 85, 245, .10) !important;
+    font-size: 38pt !important;
+  }
+}
