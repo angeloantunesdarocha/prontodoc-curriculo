@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./voice-print-fixes.css";
 import "./classic-resume.css";
+import "./smart-resume.css";
 import VoiceFieldEnhancer from "./VoiceFieldEnhancer";
 import {
   AUTHOR_NAME,
