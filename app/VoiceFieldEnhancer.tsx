@@ -116,9 +116,9 @@ export default function VoiceFieldEnhancer() {
   useEffect(() => {
     const registered = registeredRef.current;
 
-    function resetActiveButton() {
+    function resetActiveButton(expected?: RegisteredField) {
       const active = activeRef.current;
-      if (!active) return;
+      if (!active || (expected && active !== expected)) return;
       active.button.classList.remove("is-listening");
       active.button.textContent = "🎤";
       active.button.setAttribute("aria-pressed", "false");
@@ -127,8 +127,9 @@ export default function VoiceFieldEnhancer() {
     }
 
     function stopRecognition() {
-      recognitionRef.current?.stop();
+      const current = recognitionRef.current;
       recognitionRef.current = null;
+      current?.stop();
       resetActiveButton();
     }
 
@@ -166,6 +167,8 @@ export default function VoiceFieldEnhancer() {
       setNotice(`Ouvindo o campo “${item.label}”. Fale naturalmente e toque novamente para parar.`);
 
       recognition.onresult = (event) => {
+        if (recognitionRef.current !== recognition) return;
+
         const start = typeof event.resultIndex === "number"
           ? event.resultIndex
           : Math.max(0, event.results.length - 1);
@@ -191,17 +194,20 @@ export default function VoiceFieldEnhancer() {
       };
 
       recognition.onerror = (event) => {
+        if (recognitionRef.current !== recognition) return;
+
         const permissionDenied = event.error === "not-allowed" || event.error === "service-not-allowed";
         setNotice(permissionDenied
           ? "O microfone foi bloqueado. Autorize o uso do microfone nas configurações do navegador."
           : "Não consegui reconhecer a fala. Verifique o microfone e tente novamente.");
         recognitionRef.current = null;
-        resetActiveButton();
+        resetActiveButton(item);
       };
 
       recognition.onend = () => {
+        if (recognitionRef.current !== recognition) return;
         recognitionRef.current = null;
-        resetActiveButton();
+        resetActiveButton(item);
         window.setTimeout(() => setNotice(""), 2500);
       };
 
@@ -209,8 +215,8 @@ export default function VoiceFieldEnhancer() {
         recognition.start();
       } catch {
         setNotice("Não foi possível iniciar o microfone. Feche outra gravação e tente novamente.");
-        recognitionRef.current = null;
-        resetActiveButton();
+        if (recognitionRef.current === recognition) recognitionRef.current = null;
+        resetActiveButton(item);
       }
     }
 
@@ -278,8 +284,10 @@ export default function VoiceFieldEnhancer() {
       window.removeEventListener("resize", reposition);
       window.removeEventListener("beforeprint", beforePrint);
       window.removeEventListener("afterprint", afterPrint);
-      recognitionRef.current?.abort?.();
-      recognitionRef.current?.stop();
+      const current = recognitionRef.current;
+      recognitionRef.current = null;
+      current?.abort?.();
+      current?.stop();
       registered.forEach((item) => {
         item.button.remove();
         item.field.classList.remove("voice-field-input");
