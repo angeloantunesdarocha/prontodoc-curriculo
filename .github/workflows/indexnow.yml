@@ -8,6 +8,8 @@ on:
       - "public/**"
       - "scripts/submit-indexnow.mjs"
       - ".github/workflows/indexnow.yml"
+  schedule:
+    - cron: "17 10 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -27,7 +29,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
 
       - name: Aguardar sitemap publicado na Vercel
         shell: bash
