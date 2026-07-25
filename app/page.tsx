@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { CSSProperties, ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 
 type Resume = {
   name: string;
@@ -10,8 +10,27 @@ type Resume = {
   role: string;
   objective: string;
   education: string;
+  courses: string;
   experience: string;
   skills: string;
+};
+
+type NameAlignment = "left" | "center" | "right";
+
+type NameLayout = {
+  fontSize: number;
+  offsetX: number;
+  offsetY: number;
+  alignment: NameAlignment;
+  breakAfter: number;
+};
+
+const defaultNameLayout: NameLayout = {
+  fontSize: 38,
+  offsetX: 0,
+  offsetY: 0,
+  alignment: "center",
+  breakAfter: 0,
 };
 
 const initialResume: Resume = {
@@ -21,11 +40,12 @@ const initialResume: Resume = {
   city: "São Paulo, SP",
   role: "Auxiliar administrativo",
   objective:
-    "Busco minha primeira oportunidade profissional para aprender, contribuir com a equipe e desenvolver minhas habilidades, gerando bons resultados para a empresa.",
+    "Busco uma oportunidade como Auxiliar administrativo para contribuir com organização, atendimento e apoio às rotinas da equipe, desenvolvendo minhas competências e colaborando com bons resultados.",
   education: "Ensino Médio Completo — E.E. Prof. Carlos Gomes — 2023",
+  courses: "Informática básica — concluído\nAtendimento ao cliente — concluído",
   experience:
     "Jovem Aprendiz — Administração\nApoio nas rotinas administrativas e organização de documentos.\nAtendimento e suporte a colaboradores e clientes.",
-  skills: "Organização, Comunicação, Proatividade, Pacote Office, Trabalho em equipe",
+  skills: "Organização, Comunicação, Pacote Office, Atendimento ao cliente, Trabalho em equipe",
 };
 
 const emptyResume: Resume = {
@@ -36,6 +56,7 @@ const emptyResume: Resume = {
   role: "",
   objective: "",
   education: "",
+  courses: "",
   experience: "",
   skills: "",
 };
@@ -59,23 +80,156 @@ type SpeechRecognitionLike = {
   onerror: (() => void) | null;
 };
 
+type SmartRule = {
+  keywords: string[];
+  objective: (role: string) => string;
+  skills: string[];
+};
+
+function normalizeText(text: string) {
+  return text
+    .toLocaleLowerCase("pt-BR")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+const SMART_RULES: SmartRule[] = [
+  {
+    keywords: ["vigilante", "seguranca", "porteiro", "vigia", "monitoramento"],
+    objective: (role) =>
+      `Busco uma oportunidade como ${role} para atuar com responsabilidade, atenção preventiva, controle de acesso e proteção de pessoas e patrimônios, cumprindo os procedimentos da empresa com postura profissional.`,
+    skills: ["Atenção", "Responsabilidade", "Controle de acesso", "Comunicação", "Trabalho em equipe", "Postura profissional"],
+  },
+  {
+    keywords: ["administrativo", "administrativa", "assistente", "auxiliar", "recepcionista", "rh", "escritorio"],
+    objective: (role) =>
+      `Busco uma oportunidade como ${role} para contribuir com organização, atendimento, controle de documentos e apoio às rotinas da equipe, desenvolvendo minhas competências e colaborando com bons resultados.`,
+    skills: ["Organização", "Comunicação", "Pacote Office", "Atendimento ao cliente", "Gestão de documentos", "Trabalho em equipe"],
+  },
+  {
+    keywords: ["vendedor", "vendas", "comercial", "caixa", "promotor"],
+    objective: (role) =>
+      `Busco uma oportunidade como ${role} para contribuir com atendimento de qualidade, identificação das necessidades dos clientes e alcance de metas, mantendo organização, cordialidade e foco em resultados.`,
+    skills: ["Atendimento ao cliente", "Comunicação", "Negociação", "Organização", "Foco em resultados", "Trabalho em equipe"],
+  },
+  {
+    keywords: ["atendente", "atendimento", "telemarketing", "call center", "suporte"],
+    objective: (role) =>
+      `Busco uma oportunidade como ${role} para oferecer atendimento claro e respeitoso, solucionar solicitações com agilidade e contribuir para uma boa experiência dos clientes e da equipe.`,
+    skills: ["Atendimento ao cliente", "Comunicação", "Empatia", "Agilidade", "Organização", "Resolução de problemas"],
+  },
+  {
+    keywords: ["motorista", "entregador", "logistica", "estoque", "almoxarife", "conferente"],
+    objective: (role) =>
+      `Busco uma oportunidade como ${role} para contribuir com segurança, pontualidade, organização e cumprimento das rotinas operacionais, cuidando dos materiais, veículos e prazos sob minha responsabilidade.`,
+    skills: ["Pontualidade", "Responsabilidade", "Organização", "Atenção", "Trabalho em equipe", "Cumprimento de rotas e prazos"],
+  },
+  {
+    keywords: ["programador", "desenvolvedor", "tecnologia", "ti", "suporte tecnico", "sistemas"],
+    objective: (role) =>
+      `Busco uma oportunidade como ${role} para aplicar conhecimentos de tecnologia, aprender continuamente e colaborar na solução de problemas, na melhoria de processos e na entrega de resultados para a equipe.`,
+    skills: ["Raciocínio lógico", "Resolução de problemas", "Aprendizado contínuo", "Organização", "Comunicação", "Trabalho em equipe"],
+  },
+  {
+    keywords: ["enfermagem", "cuidador", "saude", "farmacia", "clinica"],
+    objective: (role) =>
+      `Busco uma oportunidade como ${role} para prestar atendimento cuidadoso, humanizado e responsável, seguindo procedimentos de segurança e colaborando com a equipe e o bem-estar das pessoas atendidas.`,
+    skills: ["Empatia", "Atenção", "Responsabilidade", "Comunicação", "Organização", "Trabalho em equipe"],
+  },
+  {
+    keywords: ["limpeza", "servicos gerais", "auxiliar de producao", "operador", "manutencao"],
+    objective: (role) =>
+      `Busco uma oportunidade como ${role} para contribuir com disciplina, organização, produtividade e cumprimento dos padrões de qualidade e segurança da empresa.`,
+    skills: ["Organização", "Agilidade", "Responsabilidade", "Atenção aos detalhes", "Disciplina", "Trabalho em equipe"],
+  },
+];
+
+const EVIDENCE_SKILLS: { keywords: string[]; skill: string }[] = [
+  { keywords: ["excel", "word", "office"], skill: "Pacote Office" },
+  { keywords: ["informatica", "computador"], skill: "Informática" },
+  { keywords: ["primeiros socorros"], skill: "Primeiros socorros" },
+  { keywords: ["brigadista", "incendio"], skill: "Prevenção e combate a incêndio" },
+  { keywords: ["habilitacao", "cnh", "carteira ab"], skill: "CNH" },
+  { keywords: ["atendimento", "cliente", "recepcao"], skill: "Atendimento ao cliente" },
+  { keywords: ["lideranca", "supervisor", "encarregado"], skill: "Liderança" },
+  { keywords: ["estoque", "almoxarifado"], skill: "Controle de estoque" },
+  { keywords: ["caixa"], skill: "Operação de caixa" },
+  { keywords: ["vigilancia", "vigilante"], skill: "Vigilância patrimonial" },
+  { keywords: ["motorista", "entrega", "rota"], skill: "Direção e cumprimento de rotas" },
+];
+
+function buildSmartSuggestions(
+  role: string,
+  education: string,
+  courses: string,
+  experience: string,
+  jobText: string,
+) {
+  const cleanRole = role.replace(/\s+/g, " ").trim();
+  if (!cleanRole) return { objective: "", skills: "" };
+
+  const normalizedRole = normalizeText(cleanRole);
+  const rule = SMART_RULES.find((item) =>
+    item.keywords.some((keyword) => normalizedRole.includes(keyword)),
+  );
+
+  const selectedRule = rule ?? {
+    objective: (desiredRole: string) =>
+      `Busco uma oportunidade como ${desiredRole} para aplicar minhas experiências e conhecimentos com responsabilidade, disposição para aprender e compromisso com os resultados da equipe e da empresa.`,
+    skills: ["Organização", "Comunicação", "Responsabilidade", "Proatividade", "Aprendizado contínuo", "Trabalho em equipe"],
+  };
+
+  const evidence = normalizeText(`${education} ${courses} ${experience} ${jobText}`);
+  const skills = [...selectedRule.skills];
+
+  EVIDENCE_SKILLS.forEach(({ keywords, skill }) => {
+    if (keywords.some((keyword) => evidence.includes(keyword)) && !skills.includes(skill)) {
+      skills.push(skill);
+    }
+  });
+
+  return {
+    objective: selectedRule.objective(cleanRole),
+    skills: skills.slice(0, 8).join(", "),
+  };
+}
+
 function ResumePreview({
   data,
   watermark = false,
   photoUrl = "",
   showPhoto = false,
   visual = false,
+  nameLayout = defaultNameLayout,
 }: {
   data: Resume;
   watermark?: boolean;
   photoUrl?: string;
   showPhoto?: boolean;
   visual?: boolean;
+  nameLayout?: NameLayout;
 }) {
   const skills = data.skills
     .split(",")
     .map((item) => item.trim())
     .filter(Boolean);
+
+  const fullName = (data.name || "Seu nome completo").replace(/\s+/g, " ").trim();
+  const nameWords = fullName.split(" ").filter(Boolean);
+  const validBreak = nameLayout.breakAfter > 0 && nameLayout.breakAfter < nameWords.length;
+  const nameLines = validBreak
+    ? [
+        nameWords.slice(0, nameLayout.breakAfter).join(" "),
+        nameWords.slice(nameLayout.breakAfter).join(" "),
+      ]
+    : [fullName];
+
+  const nameStyle = {
+    "--resume-name-size": `${nameLayout.fontSize}px`,
+    "--resume-name-x": `${nameLayout.offsetX}px`,
+    "--resume-name-y": `${nameLayout.offsetY}px`,
+    "--resume-name-align": nameLayout.alignment,
+  } as CSSProperties;
 
   return (
     <article
@@ -86,25 +240,37 @@ function ResumePreview({
       <header className="resume-header">
         {showPhoto && photoUrl && <img className="resume-photo" src={photoUrl} alt={`Foto de ${data.name || "candidato"}`} />}
         <div>
-          <h3>{data.name || "Seu nome completo"}</h3>
+          <h3 className="resume-name-custom" style={nameStyle}>
+            {nameLines.map((line, index) => (
+              <span className="resume-name-line" key={`${line}-${index}`}>{line}</span>
+            ))}
+          </h3>
           <p>
             {[data.email, data.phone, data.city].filter(Boolean).join("  •  ") ||
               "email@exemplo.com  •  (00) 00000-0000  •  Sua cidade"}
           </p>
         </div>
       </header>
-      <section>
+      <section className="resume-objective">
         <h4>Objetivo</h4>
         <p>
           {data.objective ||
             `Busco uma oportunidade como ${data.role || "profissional"} para contribuir com a equipe e desenvolver minhas habilidades.`}
         </p>
       </section>
-      <section>
+      <section className="resume-education">
         <h4>Formação</h4>
         <p>{data.education || "Informe sua formação acadêmica."}</p>
       </section>
-      <section>
+      <section className="resume-courses">
+        <h4>Cursos</h4>
+        {(data.courses || "Informe seus cursos complementares.")
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .map((line, index) => <p key={`${line}-${index}`}>{line}</p>)}
+      </section>
+      <section className="resume-experience">
         <h4>Experiência</h4>
         {(data.experience || "Se ainda não trabalhou, destaque projetos, cursos e trabalhos voluntários.")
           .split("\n")
@@ -112,7 +278,7 @@ function ResumePreview({
             <p key={`${line}-${index}`}>{line}</p>
           ))}
       </section>
-      <section>
+      <section className="resume-skills">
         <h4>Habilidades</h4>
         <div className="skill-list">
           {(skills.length ? skills : ["Organização", "Comunicação", "Trabalho em equipe"]).map(
@@ -140,18 +306,54 @@ export default function Home() {
   const [jobText, setJobText] = useState("");
   const [recording, setRecording] = useState(false);
   const [audioText, setAudioText] = useState("");
+  const [autoObjective, setAutoObjective] = useState(true);
+  const [autoSkills, setAutoSkills] = useState(true);
+  const [nameLayout, setNameLayout] = useState<NameLayout>(defaultNameLayout);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("prontodoc-resume");
+    const storedSmart = window.localStorage.getItem("prontodoc-smart-auto");
+
     if (stored) {
       try {
-        const parsedResume = JSON.parse(stored) as Resume;
-        queueMicrotask(() => setResume(parsedResume));
+        const parsedResume = JSON.parse(stored) as Partial<Resume>;
+        const restored = { ...emptyResume, ...parsedResume };
+        queueMicrotask(() => setResume(restored));
+
+        if (!storedSmart) {
+          queueMicrotask(() => {
+            setAutoObjective(!restored.objective.trim());
+            setAutoSkills(!restored.skills.trim());
+          });
+        }
       } catch {
         window.localStorage.removeItem("prontodoc-resume");
       }
     }
+
+    if (storedSmart) {
+      try {
+        const parsed = JSON.parse(storedSmart) as { objective?: boolean; skills?: boolean };
+        queueMicrotask(() => {
+          setAutoObjective(parsed.objective ?? true);
+          setAutoSkills(parsed.skills ?? true);
+        });
+      } catch {
+        window.localStorage.removeItem("prontodoc-smart-auto");
+      }
+    }
+
+    const storedLayout = window.localStorage.getItem("prontodoc-name-layout");
+    if (storedLayout) {
+      try {
+        const parsed = JSON.parse(storedLayout) as Partial<NameLayout>;
+        queueMicrotask(() => setNameLayout({ ...defaultNameLayout, ...parsed }));
+      } catch {
+        window.localStorage.removeItem("prontodoc-name-layout");
+      }
+    }
+
     const storedEntitlement = window.localStorage.getItem("prontodoc-entitlement");
     if (storedEntitlement) {
       try {
@@ -170,19 +372,76 @@ export default function Home() {
     window.localStorage.setItem("prontodoc-resume", JSON.stringify(resume));
   }, [resume, editing]);
 
+  useEffect(() => {
+    window.localStorage.setItem(
+      "prontodoc-smart-auto",
+      JSON.stringify({ objective: autoObjective, skills: autoSkills }),
+    );
+  }, [autoObjective, autoSkills]);
+
+  useEffect(() => {
+    window.localStorage.setItem("prontodoc-name-layout", JSON.stringify(nameLayout));
+  }, [nameLayout]);
+
+  const smartSuggestions = useMemo(
+    () => buildSmartSuggestions(
+      resume.role,
+      resume.education,
+      resume.courses,
+      resume.experience,
+      jobText,
+    ),
+    [resume.role, resume.education, resume.courses, resume.experience, jobText],
+  );
+
+  useEffect(() => {
+    if (!resume.role.trim()) return;
+
+    setResume((current) => {
+      const objective = autoObjective ? smartSuggestions.objective : current.objective;
+      const skills = autoSkills ? smartSuggestions.skills : current.skills;
+
+      if (objective === current.objective && skills === current.skills) return current;
+      return { ...current, objective, skills };
+    });
+  }, [resume.role, smartSuggestions, autoObjective, autoSkills]);
+
   const progress = useMemo(() => {
     const complete = Object.values(resume).filter((value) => value.trim()).length;
     return Math.round((complete / Object.keys(resume).length) * 100);
   }, [resume]);
 
-  function update(field: keyof Resume, value: string) {
+  function update(field: keyof Resume, value: string, manual = true) {
     setResume((current) => ({ ...current, [field]: value }));
+
+    if (manual && field === "objective") setAutoObjective(false);
+    if (manual && field === "skills") setAutoSkills(false);
+
     setSaved(true);
     window.setTimeout(() => setSaved(false), 1400);
   }
 
+  function applySmartSuggestions() {
+    if (!resume.role.trim()) {
+      setNotice("Preencha primeiro o cargo desejado para gerar o objetivo e as habilidades.");
+      return;
+    }
+
+    setAutoObjective(true);
+    setAutoSkills(true);
+    setResume((current) => ({
+      ...current,
+      objective: smartSuggestions.objective,
+      skills: smartSuggestions.skills,
+    }));
+    setNotice("Objetivo e habilidades atualizados. Revise e mantenha somente informações verdadeiras.");
+  }
+
   function startNew() {
     setResume(emptyResume);
+    setNameLayout(defaultNameLayout);
+    setAutoObjective(true);
+    setAutoSkills(true);
     setEditing(true);
     window.setTimeout(() => document.querySelector("#editor")?.scrollIntoView({ behavior: "smooth" }), 50);
   }
@@ -275,14 +534,18 @@ export default function Home() {
     }
     update("experience", audioText.trim());
     if (!resume.objective) {
-      update("objective", `Busco uma oportunidade como ${resume.role || "profissional"} para aplicar minha experiência, aprender e contribuir com bons resultados.`);
+      update(
+        "objective",
+        `Busco uma oportunidade como ${resume.role || "profissional"} para aplicar minha experiência, aprender e contribuir com bons resultados.`,
+        false,
+      );
     }
     setNotice("Relato colocado em Experiências. Revise o texto antes de gerar o currículo.");
   }
 
   const coverLetter = useMemo(
     () =>
-      `Olá,\n\nMeu nome é ${resume.name || "candidato(a)"} e gostaria de me candidatar a uma oportunidade como ${resume.role || "profissional"}. ${resume.objective || "Tenho interesse em contribuir com a equipe, aprender e gerar bons resultados."}\n\nMinha formação é ${resume.education || "compatível com a oportunidade"} e destaco habilidades como ${resume.skills || "organização, comunicação e trabalho em equipe"}.\n\nAgradeço pela atenção e fico à disposição para uma entrevista.\n\nAtenciosamente,\n${resume.name || "Seu nome"}`,
+      `Olá,\n\nMeu nome é ${resume.name || "candidato(a)"} e gostaria de me candidatar a uma oportunidade como ${resume.role || "profissional"}. ${resume.objective || "Tenho interesse em contribuir com a equipe, aprender e gerar bons resultados."}\n\nMinha formação é ${resume.education || "compatível com a oportunidade"}${resume.courses ? ` e possuo cursos como ${resume.courses.replace(/\n/g, ", ")}` : ""}. Destaco habilidades como ${resume.skills || "organização, comunicação e trabalho em equipe"}.\n\nAgradeço pela atenção e fico à disposição para uma entrevista.\n\nAtenciosamente,\n${resume.name || "Seu nome"}`,
     [resume],
   );
 
@@ -324,6 +587,8 @@ export default function Home() {
     setNotice(`${label} copiada.`);
   }
 
+  const nameWordOptions = resume.name.trim().split(/\s+/).filter(Boolean);
+
   return (
     <main>
       <nav className="topbar" aria-label="Navegação principal">
@@ -360,7 +625,7 @@ export default function Home() {
         </div>
         <div className="hero-preview">
           <div className="ats-badge"><strong>100%</strong><span>formato legível</span></div>
-          <ResumePreview data={displayedResume} watermark={!entitlement} />
+          <ResumePreview data={displayedResume} watermark={!entitlement} nameLayout={nameLayout} />
         </div>
       </section>
 
@@ -418,24 +683,184 @@ export default function Home() {
               <div className="progress-track" aria-label={`${progress}% preenchido`}>
                 <span style={{ width: `${progress}%` }} />
               </div>
-              <label>Nome completo<input value={resume.name} onChange={(e) => update("name", e.target.value)} placeholder="Ex.: Ana Souza" /></label>
+
+              <label>
+                Nome completo
+                <input
+                  data-no-voice="true"
+                  value={resume.name}
+                  onChange={(event) => update("name", event.target.value)}
+                  placeholder="Ex.: Ana Souza"
+                />
+              </label>
+
+              <fieldset className="smart-panel name-layout-panel">
+                <legend>↔ Ajustar o nome no currículo</legend>
+                <p>Altere somente a apresentação do nome. Os dados digitados não serão modificados.</p>
+                <label className="name-size-control">
+                  Tamanho do nome: <strong>{nameLayout.fontSize}px</strong>
+                  <input
+                    type="range"
+                    min="24"
+                    max="52"
+                    step="1"
+                    value={nameLayout.fontSize}
+                    onChange={(event) => setNameLayout((current) => ({
+                      ...current,
+                      fontSize: Number(event.target.value),
+                    }))}
+                  />
+                </label>
+                <div className="name-control-group" role="group" aria-label="Alinhamento do nome">
+                  <span>Alinhamento</span>
+                  {(["left", "center", "right"] as NameAlignment[]).map((alignment) => (
+                    <button
+                      type="button"
+                      key={alignment}
+                      className={nameLayout.alignment === alignment ? "primary-button" : "secondary-button"}
+                      onClick={() => setNameLayout((current) => ({ ...current, alignment }))}
+                    >
+                      {{ left: "Esquerda", center: "Centro", right: "Direita" }[alignment]}
+                    </button>
+                  ))}
+                </div>
+                <div className="name-move-controls" role="group" aria-label="Mover nome">
+                  <span>Mover o nome</span>
+                  <button type="button" onClick={() => setNameLayout((current) => ({ ...current, offsetY: current.offsetY - 4 }))}>↑</button>
+                  <button type="button" onClick={() => setNameLayout((current) => ({ ...current, offsetX: current.offsetX - 4 }))}>←</button>
+                  <button type="button" onClick={() => setNameLayout((current) => ({ ...current, offsetX: current.offsetX + 4 }))}>→</button>
+                  <button type="button" onClick={() => setNameLayout((current) => ({ ...current, offsetY: current.offsetY + 4 }))}>↓</button>
+                </div>
+                <label>
+                  Colocar parte do nome na linha de baixo
+                  <select
+                    value={nameLayout.breakAfter}
+                    onChange={(event) => setNameLayout((current) => ({
+                      ...current,
+                      breakAfter: Number(event.target.value),
+                    }))}
+                  >
+                    <option value={0}>Manter o nome em uma linha</option>
+                    {nameWordOptions.slice(0, -1).map((word, index) => (
+                      <option value={index + 1} key={`${word}-${index}`}>
+                        Quebrar depois de “{word}”
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <div className="inline-actions">
+                  <button type="button" className="secondary-button" onClick={() => setNameLayout(defaultNameLayout)}>
+                    Restaurar posição
+                  </button>
+                </div>
+              </fieldset>
+
               <div className="field-row">
-                <label>E-mail<input type="email" value={resume.email} onChange={(e) => update("email", e.target.value)} placeholder="voce@email.com" /></label>
-                <label>Telefone<input inputMode="tel" value={resume.phone} onChange={(e) => update("phone", e.target.value)} placeholder="(00) 00000-0000" /></label>
+                <label>
+                  E-mail
+                  <input
+                    data-no-voice="true"
+                    type="email"
+                    value={resume.email}
+                    onChange={(event) => update("email", event.target.value)}
+                    placeholder="voce@email.com"
+                  />
+                </label>
+                <label>
+                  Telefone
+                  <input
+                    data-no-voice="true"
+                    inputMode="tel"
+                    value={resume.phone}
+                    onChange={(event) => update("phone", event.target.value)}
+                    placeholder="(00) 00000-0000"
+                  />
+                </label>
               </div>
+
               <div className="field-row">
-                <label>Cidade<input value={resume.city} onChange={(e) => update("city", e.target.value)} placeholder="Cidade, Estado" /></label>
-                <label>Cargo desejado<input value={resume.role} onChange={(e) => update("role", e.target.value)} placeholder="Ex.: Auxiliar administrativo" /></label>
+                <label>
+                  Cidade
+                  <input
+                    data-no-voice="true"
+                    value={resume.city}
+                    onChange={(event) => update("city", event.target.value)}
+                    placeholder="Cidade, Estado"
+                  />
+                </label>
+                <label>
+                  Cargo desejado
+                  <input
+                    data-no-voice="true"
+                    value={resume.role}
+                    onChange={(event) => update("role", event.target.value)}
+                    placeholder="Ex.: Auxiliar administrativo"
+                  />
+                </label>
               </div>
-              <label>Objetivo profissional<textarea value={resume.objective} onChange={(e) => update("objective", e.target.value)} placeholder="Que oportunidade você procura?" /></label>
-              <label>Formação<textarea value={resume.education} onChange={(e) => update("education", e.target.value)} placeholder="Curso, instituição e ano" /></label>
-              <label>Experiências<textarea value={resume.experience} onChange={(e) => update("experience", e.target.value)} placeholder="Cargo, empresa e principais atividades" /></label>
-              <label>Habilidades<input value={resume.skills} onChange={(e) => update("skills", e.target.value)} placeholder="Separe por vírgulas" /></label>
+
+              <div className="smart-autofill-card" aria-live="polite">
+                <div>
+                  <strong>✨ Preenchimento inteligente</strong>
+                  <p>
+                    Ao informar o cargo, o ProntoDoc personaliza o objetivo e sugere habilidades.
+                    Formação, cursos, experiência e descrição da vaga também refinam as sugestões.
+                  </p>
+                </div>
+                <button type="button" className="secondary-button" onClick={applySmartSuggestions}>
+                  Atualizar sugestões
+                </button>
+                <small>
+                  Objetivo: {autoObjective ? "automático" : "editado manualmente"} · Habilidades: {autoSkills ? "automáticas" : "editadas manualmente"}.
+                  Revise e mantenha apenas informações verdadeiras.
+                </small>
+              </div>
+
+              <label>
+                Objetivo profissional
+                <textarea
+                  value={resume.objective}
+                  onChange={(event) => update("objective", event.target.value)}
+                  placeholder="Será personalizado de acordo com o cargo desejado."
+                />
+              </label>
+              <label>
+                Formação
+                <textarea
+                  value={resume.education}
+                  onChange={(event) => update("education", event.target.value)}
+                  placeholder="Curso, instituição e ano"
+                />
+              </label>
+              <label>
+                Cursos
+                <textarea
+                  value={resume.courses}
+                  onChange={(event) => update("courses", event.target.value)}
+                  placeholder={"Um curso por linha. Ex.:\nInformática básica — concluído\nPrimeiros socorros — concluído"}
+                />
+              </label>
+              <label>
+                Experiências
+                <textarea
+                  value={resume.experience}
+                  onChange={(event) => update("experience", event.target.value)}
+                  placeholder="Cargo, empresa e principais atividades"
+                />
+              </label>
+              <label>
+                Habilidades
+                <input
+                  value={resume.skills}
+                  onChange={(event) => update("skills", event.target.value)}
+                  placeholder="Sugestões automáticas separadas por vírgulas"
+                />
+              </label>
 
               <fieldset className="smart-panel">
                 <legend>🎙️ Conte sua experiência por voz</legend>
                 <p>Fale onde trabalhou, o que fazia, cursos e resultados. Você poderá revisar tudo.</p>
-                <textarea value={audioText} onChange={(e) => setAudioText(e.target.value)} placeholder="Seu relato aparecerá aqui…" />
+                <textarea value={audioText} onChange={(event) => setAudioText(event.target.value)} placeholder="Seu relato aparecerá aqui…" />
                 <div className="inline-actions">
                   <button type="button" className={recording ? "danger-button" : "secondary-button"} onClick={recording ? stopVoice : startVoice}>
                     {recording ? "■ Parar gravação" : "● Começar a falar"}
@@ -465,7 +890,7 @@ export default function Home() {
               <fieldset className="smart-panel vacancy-panel">
                 <legend>✦ Currículo direcionado à vaga</legend>
                 <p>Cole o anúncio. Não inventamos qualificações: mostramos correspondências e pontos que você deve confirmar.</p>
-                <textarea value={jobText} onChange={(e) => setJobText(e.target.value)} placeholder="Cole aqui a descrição completa da vaga…" />
+                <textarea value={jobText} onChange={(event) => setJobText(event.target.value)} placeholder="Cole aqui a descrição completa da vaga…" />
                 {jobText.trim() && (
                   <div className="match-result">
                     <strong>{jobAnalysis.score}% de alinhamento inicial</strong>
@@ -483,7 +908,18 @@ export default function Home() {
                 {jobText.trim() && <button type="button" className={resumeStyle === "vaga" ? "primary-button" : "secondary-button"} onClick={() => setResumeStyle("vaga")}>Para esta vaga</button>}
               </div>
               <div className="form-actions">
-                <button type="button" className="secondary-button" onClick={() => setResume(emptyResume)}>Limpar</button>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => {
+                    setResume(emptyResume);
+                    setNameLayout(defaultNameLayout);
+                    setAutoObjective(true);
+                    setAutoSkills(true);
+                  }}
+                >
+                  Limpar
+                </button>
                 <button type="button" className="primary-button" onClick={downloadPdf}>
                   {entitlement ? "Baixar PDF sem marca" : "Baixar PDF grátis"}
                 </button>
@@ -502,6 +938,7 @@ export default function Home() {
                 photoUrl={photoUrl}
                 showPhoto={resumeStyle !== "ats" && photoChoice !== "no"}
                 visual={resumeStyle === "visual"}
+                nameLayout={nameLayout}
               />
             </div>
           </div>
