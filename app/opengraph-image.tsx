@@ -31,10 +31,11 @@ export default function OpenGraphImage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 38,
+              fontSize: 28,
+              fontWeight: 900,
             }}
           >
-            ▤
+            PD
           </div>
           ProntoDoc
         </div>
@@ -46,10 +47,10 @@ export default function OpenGraphImage() {
             Crie, adapte à vaga, salve em PDF e treine respostas em voz alta.
           </div>
         </div>
-        <div style={{ display: "flex", gap: 24, fontSize: 23, color: "#27533d" }}>
-          <span>✓ Guias gratuitos</span>
-          <span>✓ Versão ATS</span>
-          <span>✓ Treino por voz</span>
+        <div style={{ display: "flex", gap: 30, fontSize: 23, color: "#27533d" }}>
+          <span>Guias gratuitos</span>
+          <span>Versão ATS</span>
+          <span>Treino por voz</span>
         </div>
       </div>
     ),
