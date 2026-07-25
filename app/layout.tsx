@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {
@@ -142,6 +143,22 @@ const softwareJsonLd = {
   },
 };
 
+const institutionalLinks = [
+  ["Como funciona", "/como-funciona"],
+  ["Guias", "/guias"],
+  ["Currículo", "/guias/curriculo"],
+  ["Entrevista", "/guias/entrevista"],
+  ["Profissões", "/guias/profissoes"],
+  ["Sobre", "/sobre"],
+  ["Autor", "/autor/angelo-antunes"],
+  ["Política editorial", "/politica-editorial"],
+  ["Segurança", "/seguranca"],
+  ["Privacidade", "/privacidade"],
+  ["Termos", "/termos"],
+  ["Contato", "/contato"],
+  ["Parcerias", "/parcerias"],
+] as const;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -158,6 +175,26 @@ export default function RootLayout({
           />
         ))}
         {children}
+        <footer
+          aria-label="Informações e áreas do ProntoDoc"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.7rem 1.15rem",
+            padding: "1.25rem 1rem",
+            borderTop: "1px solid #dbe2ee",
+            background: "#ffffff",
+            fontSize: "0.88rem",
+            lineHeight: 1.4,
+          }}
+        >
+          {institutionalLinks.map(([label, href]) => (
+            <Link key={href} href={href}>{label}</Link>
+          ))}
+          <a href="/feed.xml" type="application/rss+xml">RSS</a>
+        </footer>
       </body>
     </html>
   );
