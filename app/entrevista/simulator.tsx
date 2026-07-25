@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 type PlanId = "pdf" | "versions" | "kit" | "interview" | "vacancy" | "journey";
 type Mode = "primeiro" | "atendimento" | "administrativo" | "vendas" | "operacional" | "lideranca";
+type VoiceState = "idle" | "loading" | "speaking" | "fallback";
 type RecognitionResult = { results: ArrayLike<{ 0: { transcript: string } }> };
 type Recognition = {
   lang: string;
@@ -96,6 +97,17 @@ function evaluate(answer: string, vacancy: string) {
   return { score, words: words.length, matched, tips };
 }
 
+function browserMaleVoice() {
+  if (!("speechSynthesis" in window)) return null;
+  const voices = window.speechSynthesis.getVoices();
+  const portugueseVoices = voices.filter((voice) => /^pt(-|_)/i.test(voice.lang));
+  const maleName = /(antonio|antônio|daniel|felipe|ricardo|paulo|male|masculino)/i;
+  return portugueseVoices.find((voice) => maleName.test(voice.name))
+    || portugueseVoices.find((voice) => /pt-BR/i.test(voice.lang))
+    || portugueseVoices[0]
+    || null;
+}
+
 export default function InterviewSimulator() {
   const [mode, setMode] = useState<Mode>("primeiro");
   const [role, setRole] = useState("");
@@ -105,16 +117,31 @@ export default function InterviewSimulator() {
   const [answer, setAnswer] = useState("");
   const [answers, setAnswers] = useState<{ question: string; answer: string; score: number; tips: string[] }[]>([]);
   const [recording, setRecording] = useState(false);
+  const [voiceState, setVoiceState] = useState<VoiceState>("idle");
   const [notice, setNotice] = useState("");
   const [entitlement, setEntitlement] = useState<PlanId | null>(null);
   const [checkoutLoading, setCheckoutLoading] = useState<PlanId | null>(null);
   const recognitionRef = useRef<Recognition | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioCacheRef = useRef<Map<string, string>>(new Map());
+  const voiceRequestRef = useRef<AbortController | null>(null);
+  const apiVoiceAvailableRef = useRef(true);
 
   useEffect(() => {
     try {
       const stored = JSON.parse(localStorage.getItem("prontodoc-entitlement") || "{}") as { plan?: PlanId };
       if (stored.plan) setEntitlement(stored.plan);
     } catch { /* armazenamento opcional */ }
+
+    const cachedAudio = audioCacheRef.current;
+    return () => {
+      voiceRequestRef.current?.abort();
+      recognitionRef.current?.stop();
+      audioRef.current?.pause();
+      window.speechSynthesis?.cancel();
+      cachedAudio.forEach((url) => URL.revokeObjectURL(url));
+      cachedAudio.clear();
+    };
   }, []);
 
   const premium = entitlement === "interview" || entitlement === "vacancy" || entitlement === "journey";
@@ -131,13 +158,101 @@ export default function InterviewSimulator() {
     ? Math.round(answers.reduce((sum, item) => sum + item.score, 0) / answers.length)
     : 0;
 
-  function speak(text: string) {
-    if (!("speechSynthesis" in window)) return;
+  function stopSpeaking() {
+    voiceRequestRef.current?.abort();
+    voiceRequestRef.current = null;
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    setVoiceState("idle");
+  }
+
+  function speakWithBrowser(text: string) {
+    if (!("speechSynthesis" in window)) {
+      setVoiceState("idle");
+      setNotice("Não foi possível reproduzir a pergunta. Leia o texto exibido na tela.");
+      return;
+    }
+
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
+    const preferredVoice = browserMaleVoice();
     utterance.lang = "pt-BR";
-    utterance.rate = 0.95;
+    utterance.rate = 0.93;
+    utterance.pitch = 0.82;
+    if (preferredVoice) utterance.voice = preferredVoice;
+    utterance.onstart = () => setVoiceState("fallback");
+    utterance.onend = () => setVoiceState("idle");
+    utterance.onerror = () => setVoiceState("idle");
     window.speechSynthesis.speak(utterance);
+  }
+
+  async function playAudio(url: string) {
+    const audio = audioRef.current ?? new Audio();
+    audioRef.current = audio;
+    audio.pause();
+    audio.src = url;
+    audio.currentTime = 0;
+    audio.onplay = () => setVoiceState("speaking");
+    audio.onended = () => setVoiceState("idle");
+    audio.onerror = () => {
+      setVoiceState("idle");
+      setNotice("A voz principal falhou. Use o botão Ouvir para tentar novamente.");
+    };
+    await audio.play();
+  }
+
+  async function speak(text: string) {
+    stopSpeaking();
+    setNotice("");
+
+    const cachedUrl = audioCacheRef.current.get(text);
+    if (cachedUrl) {
+      try {
+        await playAudio(cachedUrl);
+        return;
+      } catch {
+        audioCacheRef.current.delete(text);
+        URL.revokeObjectURL(cachedUrl);
+      }
+    }
+
+    if (!apiVoiceAvailableRef.current) {
+      speakWithBrowser(text);
+      return;
+    }
+
+    const controller = new AbortController();
+    voiceRequestRef.current = controller;
+    setVoiceState("loading");
+
+    try {
+      const response = await fetch("/api/voice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+        signal: controller.signal,
+      });
+
+      if (!response.ok) {
+        if (response.status === 503) apiVoiceAvailableRef.current = false;
+        throw new Error("Voz principal indisponível");
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      audioCacheRef.current.set(text, url);
+      await playAudio(url);
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") return;
+      speakWithBrowser(text);
+    } finally {
+      if (voiceRequestRef.current === controller) voiceRequestRef.current = null;
+    }
   }
 
   function startInterview() {
@@ -146,13 +261,12 @@ export default function InterviewSimulator() {
     setStarted(true);
     setAnswer("");
     setNotice("");
-    window.setTimeout(() => {
-      document.querySelector("#simulador")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      speak(questions[0]);
-    }, 150);
+    document.querySelector("#simulador")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    void speak(questions[0]);
   }
 
   function startVoice() {
+    stopSpeaking();
     const speechWindow = window as typeof window & {
       SpeechRecognition?: new () => Recognition;
       webkitSpeechRecognition?: new () => Recognition;
@@ -192,13 +306,14 @@ export default function InterviewSimulator() {
       return;
     }
     stopVoice();
+    stopSpeaking();
     const result = evaluate(answer, vacancy);
     setAnswers((current) => [...current, { question: questions[index], answer: answer.trim(), score: result.score, tips: result.tips }]);
     setAnswer("");
     setNotice("");
     const next = index + 1;
     setIndex(next);
-    if (next < questionLimit && next < questions.length) window.setTimeout(() => speak(questions[next]), 180);
+    if (next < questionLimit && next < questions.length) void speak(questions[next]);
   }
 
   async function checkout(plan: PlanId) {
@@ -219,6 +334,12 @@ export default function InterviewSimulator() {
     }
   }
 
+  const voiceButtonLabel = voiceState === "loading"
+    ? "Preparando voz…"
+    : voiceState === "speaking" || voiceState === "fallback"
+      ? "■ Parar voz"
+      : "🔊 Ouvir";
+
   return (
     <main className="interview-site">
       <nav className="topbar" aria-label="Navegação principal">
@@ -231,8 +352,8 @@ export default function InterviewSimulator() {
         <div>
           <span className="eyebrow">🎙️ Entrevista ProntoDoc</span>
           <h1>Treine em voz alta antes de falar com o recrutador</h1>
-          <p>A entrevista fala com você, ouve sua resposta e mostra como deixá-la mais clara — adaptada ao cargo e à vaga, sem inventar experiências.</p>
-          <div className="trust-row"><span>✓ 3 perguntas grátis</span><span>✓ Funciona no Android</span><span>✓ Áudio não é enviado</span></div>
+          <p>A Voz ProntoDoc conduz a entrevista, ouve sua resposta e mostra como deixá-la mais clara — adaptada ao cargo e à vaga, sem inventar experiências.</p>
+          <div className="trust-row"><span>✓ Voz masculina padrão</span><span>✓ Funciona no Android</span><span>✓ Sua resposta de áudio não é enviada</span></div>
         </div>
         {!started && (
           <button
@@ -255,7 +376,7 @@ export default function InterviewSimulator() {
             <h2>Comece agora ou adapte o treino à sua vaga</h2>
             <p className="setup-intro">
               Você não precisa preencher nada para experimentar. Toque no botão azul
-              e receba imediatamente a primeira pergunta.
+              e a Voz ProntoDoc fará imediatamente a primeira pergunta.
             </p>
             <button className="primary-button instant-start-button" onClick={startInterview}>
               🎤 Começar entrevista agora
@@ -278,7 +399,7 @@ export default function InterviewSimulator() {
                 <button className="secondary-button" onClick={startInterview}>Começar treino personalizado →</button>
               </div>
             </details>
-            <p className="privacy-note">A transcrição e a avaliação acontecem neste aparelho. Revise sempre as sugestões e mantenha somente informações verdadeiras.</p>
+            <p className="privacy-note">A Voz ProntoDoc é sintética e gerada por inteligência artificial. Sua resposta falada é transformada em texto pelo navegador e não é enviada ao serviço que produz a voz do entrevistador.</p>
           </div>
         ) : complete ? (
           <div className="interview-report">
@@ -316,8 +437,34 @@ export default function InterviewSimulator() {
             <div className="session-top"><span>Pergunta {index + 1} de {questionLimit}</span><div className="progress-track"><span style={{ width: `${((index + 1) / questionLimit) * 100}%` }} /></div></div>
             <div className="interviewer-card">
               <span className="interviewer-avatar">P</span>
-              <div><small>ENTREVISTADOR PRONTODOC</small><h2>{questions[index]}</h2></div>
-              <button className="listen-button" onClick={() => speak(questions[index])} aria-label="Ouvir pergunta novamente">🔊 Ouvir</button>
+              <div>
+                <small>ENTREVISTADOR PRONTODOC</small>
+                <p
+                  aria-live="polite"
+                  style={{
+                    color: "#426087",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    lineHeight: 1.4,
+                    margin: "6px 0 0",
+                  }}
+                >
+                  {voiceState === "fallback"
+                    ? "Voz masculina de reserva do aparelho"
+                    : voiceState === "loading"
+                      ? "Preparando a Voz ProntoDoc…"
+                      : "Voz ProntoDoc • masculina • gerada por IA"}
+                </p>
+                <h2>{questions[index]}</h2>
+              </div>
+              <button
+                className="listen-button"
+                onClick={() => voiceState === "idle" ? void speak(questions[index]) : stopSpeaking()}
+                aria-label={voiceState === "idle" ? "Ouvir pergunta novamente" : "Parar reprodução da pergunta"}
+                disabled={voiceState === "loading"}
+              >
+                {voiceButtonLabel}
+              </button>
             </div>
             <label className="answer-field">Sua resposta
               <textarea value={answer} onChange={(event) => setAnswer(event.target.value)} placeholder="Toque no microfone e responda, ou digite aqui…" />
@@ -376,8 +523,9 @@ export default function InterviewSimulator() {
 
       <section className="faq section">
         <div className="section-heading"><span className="kicker">Uso responsável</span><h2>O que o simulador faz — e o que não faz</h2></div>
+        <details><summary>A Voz ProntoDoc é uma pessoa real?</summary><p>Não. É uma voz masculina sintética, gerada por inteligência artificial e identificada dessa forma durante a entrevista.</p></details>
         <details><summary>O ProntoDoc inventa uma resposta por mim?</summary><p>Não. Ele ajuda a organizar experiências verdadeiras e sinaliza quando faltam exemplos. Nunca recomendamos inventar empregos, cursos ou resultados.</p></details>
-        <details><summary>Meu áudio é armazenado?</summary><p>Não pelo ProntoDoc. O navegador transforma sua fala em texto e a análise desta versão acontece no seu aparelho.</p></details>
+        <details><summary>Meu áudio é armazenado?</summary><p>Não pelo ProntoDoc. O navegador transforma sua fala em texto e a análise desta versão acontece no seu aparelho. Somente o texto da pergunta é enviado ao serviço de voz do entrevistador.</p></details>
         <details><summary>Funciona sem microfone?</summary><p>Sim. Todas as respostas podem ser digitadas; a avaliação e o relatório funcionam da mesma maneira.</p></details>
       </section>
       {!started && (
