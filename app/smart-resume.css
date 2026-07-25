@@ -1,0 +1,221 @@
+.smart-autofill-card {
+  align-items: center;
+  background: linear-gradient(135deg, #eef5ff, #f8fbff);
+  border: 1px solid #a9c7fa;
+  border-radius: 16px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr auto;
+  padding: 16px;
+}
+
+.smart-autofill-card strong {
+  color: #0b3c9e;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.smart-autofill-card p {
+  color: #426087;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.smart-autofill-card small {
+  color: #52657f;
+  font-size: 12px;
+  grid-column: 1 / -1;
+  line-height: 1.45;
+}
+
+.name-layout-panel {
+  background: #fbfcff;
+}
+
+.name-size-control {
+  display: grid !important;
+  gap: 8px;
+}
+
+.name-size-control input[type="range"] {
+  accent-color: #0b55f5;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.name-control-group {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.name-control-group > span,
+.name-move-controls > span {
+  color: #17233b;
+  font-size: 13px;
+  font-weight: 800;
+  grid-column: 1 / -1;
+}
+
+.name-control-group button {
+  min-height: 42px;
+  padding: 8px 10px;
+}
+
+.name-move-controls {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.name-move-controls button {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #a9b8ce;
+  border-radius: 10px;
+  color: #0b3c9e;
+  display: flex;
+  font-size: 21px;
+  font-weight: 800;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.name-move-controls button:hover,
+.name-move-controls button:focus-visible {
+  border-color: #0b55f5;
+  background: #eef5ff;
+}
+
+.resume-header h3.resume-name-custom {
+  font-size: var(--resume-name-size, 38px) !important;
+  text-align: var(--resume-name-align, center) !important;
+  transform: translate(var(--resume-name-x, 0px), var(--resume-name-y, 0px));
+  transform-origin: center;
+  white-space: normal;
+}
+
+.resume-name-line {
+  display: block;
+}
+
+/* O terceiro bloco agora é Cursos. Neutraliza as regras antigas de experiência. */
+.resume-sheet section.resume-courses > p,
+.resume-sheet section.resume-courses > p:nth-of-type(odd) {
+  font-weight: 400 !important;
+  margin: 4px 0 !important;
+  padding-left: 70px !important;
+  position: relative;
+}
+
+.resume-sheet section.resume-courses > p::before,
+.resume-sheet section.resume-courses > p:nth-of-type(odd)::before {
+  content: "•" !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  left: 34px !important;
+  line-height: 1;
+  position: absolute;
+  top: 1px !important;
+}
+
+/* O histórico profissional passa a ser o quarto bloco. */
+.resume-sheet section.resume-experience > p {
+  padding-left: 64px !important;
+  position: relative;
+}
+
+.resume-sheet section.resume-experience > p:nth-of-type(odd) {
+  font-weight: 750 !important;
+  margin-top: 14px !important;
+  padding-left: 70px !important;
+}
+
+.resume-sheet section.resume-experience > p:nth-of-type(odd)::before {
+  content: "•";
+  font-size: 20px;
+  font-weight: 400;
+  left: 34px;
+  line-height: 1;
+  position: absolute;
+  top: 1px;
+}
+
+@media (max-width: 560px) {
+  .smart-autofill-card {
+    grid-template-columns: 1fr;
+  }
+
+  .smart-autofill-card button,
+  .name-control-group button {
+    width: 100%;
+  }
+
+  .name-control-group {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-sheet section.resume-courses > p,
+  .resume-sheet section.resume-courses > p:nth-of-type(odd),
+  .resume-sheet section.resume-experience > p,
+  .resume-sheet section.resume-experience > p:nth-of-type(odd) {
+    padding-left: 38px !important;
+  }
+
+  .resume-sheet section.resume-courses > p::before,
+  .resume-sheet section.resume-courses > p:nth-of-type(odd)::before,
+  .resume-sheet section.resume-experience > p:nth-of-type(odd)::before {
+    left: 14px !important;
+  }
+}
+
+@media print {
+  body.resume-print-active .resume-header h3.resume-name-custom {
+    font-size: var(--resume-name-size, 38px) !important;
+    text-align: var(--resume-name-align, center) !important;
+    transform: translate(var(--resume-name-x, 0px), var(--resume-name-y, 0px)) !important;
+    transform-origin: center !important;
+  }
+
+  body.resume-print-active .resume-sheet section.resume-courses > p,
+  body.resume-print-active .resume-sheet section.resume-courses > p:nth-of-type(odd) {
+    font-weight: 400 !important;
+    margin: 1mm 0 !important;
+    padding-left: 19mm !important;
+    position: relative !important;
+  }
+
+  body.resume-print-active .resume-sheet section.resume-courses > p::before,
+  body.resume-print-active .resume-sheet section.resume-courses > p:nth-of-type(odd)::before {
+    content: "•" !important;
+    font-size: 15pt !important;
+    font-weight: 400 !important;
+    left: 9mm !important;
+    line-height: 1 !important;
+    position: absolute !important;
+    top: 0 !important;
+  }
+
+  body.resume-print-active .resume-sheet section.resume-experience > p {
+    padding-left: 17mm !important;
+    position: relative !important;
+  }
+
+  body.resume-print-active .resume-sheet section.resume-experience > p:nth-of-type(odd) {
+    font-weight: 750 !important;
+    margin-top: 3.5mm !important;
+    padding-left: 19mm !important;
+  }
+
+  body.resume-print-active .resume-sheet section.resume-experience > p:nth-of-type(odd)::before {
+    content: "•" !important;
+    font-size: 15pt !important;
+    font-weight: 400 !important;
+    left: 9mm !important;
+    line-height: 1 !important;
+    position: absolute !important;
+    top: 0 !important;
+  }
+}
