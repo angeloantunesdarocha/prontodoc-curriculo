@@ -188,9 +188,11 @@ function buildSmartSuggestions(
     }
   });
 
+  const distinctSkills = skills.filter((skill) => !evidence.includes(normalizeText(skill)));
+
   return {
     objective: selectedRule.objective(cleanRole),
-    skills: skills.slice(0, 8).join(", "),
+    skills: distinctSkills.slice(0, 8).join(", "),
   };
 }
 
@@ -209,10 +211,12 @@ function ResumePreview({
   visual?: boolean;
   nameLayout?: NameLayout;
 }) {
+  const sourceText = normalizeText([data.education, data.courses, data.experience].join(" "));
   const skills = data.skills
     .split(",")
     .map((item) => item.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter((skill) => !sourceText.includes(normalizeText(skill)));
 
   const fullName = (data.name || "Seu nome completo").replace(/\s+/g, " ").trim();
   const nameWords = fullName.split(" ").filter(Boolean);
