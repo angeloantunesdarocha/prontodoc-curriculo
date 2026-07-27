@@ -123,8 +123,18 @@
 
 /* O histórico profissional passa a ser o quarto bloco. */
 .resume-sheet section.resume-experience > p {
-  padding-left: 64px !important;
+  padding-left: 70px !important;
   position: relative;
+}
+
+.resume-sheet section.resume-experience > p::before {
+  content: "•";
+  font-size: 20px;
+  font-weight: 400;
+  left: 34px;
+  line-height: 1;
+  position: absolute;
+  top: 1px;
 }
 
 .resume-sheet section.resume-experience > p:nth-of-type(odd) {
@@ -166,6 +176,7 @@
 
   .resume-sheet section.resume-courses > p::before,
   .resume-sheet section.resume-courses > p:nth-of-type(odd)::before,
+  .resume-sheet section.resume-experience > p::before,
   .resume-sheet section.resume-experience > p:nth-of-type(odd)::before {
     left: 14px !important;
   }
@@ -199,7 +210,7 @@
   }
 
   body.resume-print-active .resume-sheet section.resume-experience > p {
-    padding-left: 17mm !important;
+    padding-left: 19mm !important;
     position: relative !important;
   }
 
@@ -209,6 +220,7 @@
     padding-left: 19mm !important;
   }
 
+  body.resume-print-active .resume-sheet section.resume-experience > p::before,
   body.resume-print-active .resume-sheet section.resume-experience > p:nth-of-type(odd)::before {
     content: "•" !important;
     font-size: 15pt !important;
