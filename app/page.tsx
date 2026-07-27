@@ -264,7 +264,11 @@ function ResumePreview({
       </section>
       <section className="resume-education">
         <h4>Formação</h4>
-        <p>{data.education || "Informe sua formação acadêmica."}</p>
+        {(data.education || "Informe sua formação acadêmica.")
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .map((line, index) => <p key={line + "-" + index}>{line}</p>)}
       </section>
       <section className="resume-courses">
         <h4>Cursos</h4>
