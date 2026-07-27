@@ -196,6 +196,11 @@ function buildSmartSuggestions(
   };
 }
 
+function isExperienceTitle(line: string) {
+  const normalized = line.trim();
+  return normalized.length > 0 && normalized.length <= 60 && !/[.!?:;]$/.test(normalized);
+}
+
 function ResumePreview({
   data,
   watermark = false,
@@ -281,9 +286,11 @@ function ResumePreview({
       <section className="resume-experience">
         <h4>Experiência</h4>
         {(data.experience || "Se ainda não trabalhou, destaque projetos, cursos e trabalhos voluntários.")
-          .split("\n")
+          .split("\\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
           .map((line, index) => (
-            <p key={`${line}-${index}`}>{line}</p>
+            <p className={isExperienceTitle(line) ? "experience-title" : "experience-description"} key={line + "-" + index}>{line}</p>
           ))}
       </section>
       <section className="resume-skills">
