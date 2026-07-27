@@ -4,12 +4,12 @@ import { guides } from "./catalog";
 import { SITE_URL } from "../site";
 
 export const metadata: Metadata = {
-  title: "Central do Currículo — Guias gratuitos",
-  description: "Guias gratuitos para criar currículo, buscar o primeiro emprego e se preparar para entrevistas pelo celular.",
+  title: "Guias de currículo e entrevista de emprego",
+  description: "Aprenda como fazer currículo pelo celular, montar um currículo para primeiro emprego, adaptar seu currículo para ATS e se preparar para entrevistas.",
   alternates: { canonical: "/guias" },
   openGraph: {
-    title: "Central do Currículo — Guias gratuitos",
-    description: "Orientações práticas sobre currículo, candidatura e entrevista de emprego.",
+    title: "Guias de currículo e entrevista de emprego",
+    description: "Orientações práticas sobre currículo, primeiro emprego, candidatura e entrevista.",
     url: `${SITE_URL}/guias`,
     type: "website",
     locale: "pt_BR",
@@ -64,7 +64,7 @@ export default function GuidesPage() {
 
       <header className="content-hero">
         <span className="eyebrow">Central do Currículo</span>
-        <h1>Orientação prática do currículo à entrevista</h1>
+        <h1>Como fazer currículo e se preparar para uma entrevista</h1>
         <p>Conteúdo gratuito, direto e responsável para quem está procurando emprego em qualquer lugar do Brasil.</p>
       </header>
 

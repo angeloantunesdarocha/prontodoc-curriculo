@@ -1,6 +1,6 @@
 import { guides as originalGuides, type Guide } from "./data";
 
-const extraGuides: Guide[] = [
+const extraGuides = ([
   {
     slug: "curriculo-jovem-aprendiz",
     title: "Currículo para Jovem Aprendiz: modelo e passo a passo",
@@ -324,10 +324,96 @@ const extraGuides: Guide[] = [
       { question: "Devo escrever a mensagem no corpo do e-mail?", answer: "Sim. Mesmo curta, ela ajuda a identificar a candidatura e demonstra cuidado." },
       { question: "Posso enviar Word?", answer: "Prefira PDF, a menos que o anúncio solicite outro formato." },
     ],
-  },
-];
+  },,
 
-export const guides: Guide[] = [...originalGuides, ...extraGuides];
+  {
+    slug: "curriculo-motorista",
+    title: "Currículo para motorista: modelo e habilidades importantes",
+    description: "Aprenda a destacar habilitação, experiência, segurança, rotas e atendimento no currículo para motorista.",
+    category: "Por profissão",
+    readingTime: "7 min",
+    intro: "Um currículo para motorista deve mostrar habilitação compatível, experiência real, cuidado com segurança e conhecimento da rotina de transporte. Organize as informações de forma direta e sem exageros.",
+    sections: [
+      {
+        title: "Informe a categoria e a experiência",
+        paragraphs: ["Indique a categoria da CNH, cursos relacionados e os tipos de veículo que você realmente dirigiu.", "Descreva entregas, transporte de passageiros, atendimento, conferência de carga ou rotinas de aplicativo quando fizerem parte da sua experiência."],
+        bullets: ["Categoria da CNH", "Direção defensiva", "Conhecimento de rotas", "Conferência de carga", "Pontualidade"],
+      },
+      {
+        title: "Destaque segurança e responsabilidade",
+        paragraphs: ["Explique cuidados com inspeção, documentação, manutenção preventiva e cumprimento de horários.", "Não informe que possui uma categoria, curso ou experiência que não possa comprovar."],
+      },
+      {
+        title: "Apresente trabalhos autônomos",
+        paragraphs: ["Atividades como motorista de aplicativo, entregas ou transporte autônomo podem entrar com período, tipo de serviço e responsabilidades verdadeiras.", "Preserve dados de passageiros, clientes e endereços."],
+      },
+    ],
+    faqs: [
+      { question: "Motorista de aplicativo conta como experiência?", answer: "Sim. Apresente como atividade autônoma e descreva atendimento, rotas e responsabilidade." },
+      { question: "Preciso colocar o número da CNH?", answer: "Não. Informe apenas a categoria e a validade quando isso for solicitado por um canal legítimo." },
+    ],
+  },
+  {
+    slug: "curriculo-auxiliar-administrativo",
+    title: "Currículo para auxiliar administrativo: modelo e exemplos",
+    description: "Veja como apresentar organização, documentos, atendimento, planilhas e apoio de escritório no currículo.",
+    category: "Por profissão",
+    readingTime: "8 min",
+    intro: "O currículo de auxiliar administrativo deve traduzir tarefas de escritório em responsabilidades claras. Organização, atendimento, documentos e ferramentas digitais são relevantes quando descritos com exemplos reais.",
+    sections: [
+      {
+        title: "Liste rotinas administrativas",
+        paragraphs: ["Descreva arquivo, cadastro, emissão de documentos, atendimento, agenda, planilhas, compras ou apoio financeiro somente quando essas atividades fizerem parte da sua experiência.", "Use verbos de ação e informe o contexto, como escola, clínica, loja ou escritório."],
+        bullets: ["Organização de documentos", "Atendimento", "Planilhas", "Controle de agenda", "Digitação"],
+      },
+      {
+        title: "Mostre ferramentas que conhece",
+        paragraphs: ["Informe Word, Excel, Google Workspace ou sistemas internos com o nível que corresponde ao que você consegue executar.", "Projetos escolares e atividades voluntárias podem demonstrar organização, desde que sejam identificados corretamente."],
+      },
+      {
+        title: "Adapte para a vaga",
+        paragraphs: ["Compare as tarefas do anúncio com o que você já fez e coloque primeiro as experiências mais relacionadas.", "Não transforme uma tarefa ocasional em domínio avançado nem invente resultados."],
+      },
+    ],
+    faqs: [
+      { question: "Preciso saber Excel para ser auxiliar administrativo?", answer: "Depende da vaga. Informe as funções que você realmente sabe executar, como organização de tabelas e filtros básicos." },
+      { question: "Experiência em loja serve?", answer: "Pode servir quando envolver atendimento, caixa, estoque, cadastro ou organização de documentos." },
+    ],
+  },
+  {
+    slug: "curriculo-atendente",
+    title: "Currículo para atendente: como destacar atendimento ao cliente",
+    description: "Monte um currículo para atendente com exemplos de comunicação, canais de contato, resolução e organização.",
+    category: "Por profissão",
+    readingTime: "7 min",
+    intro: "Atendimento aparece em lojas, clínicas, restaurantes, recepção e canais digitais. O currículo deve explicar com quem você se comunicava, quais demandas resolvia e como mantinha organização.",
+    sections: [
+      {
+        title: "Explique o tipo de atendimento",
+        paragraphs: ["Informe se o atendimento era presencial, por telefone, WhatsApp, chat ou e-mail e em qual segmento você atuava.", "Descreva orientação, registro de pedidos, agendamento, troca, reclamação ou encaminhamento quando forem tarefas reais."],
+        bullets: ["Comunicação clara", "Escuta ativa", "Registro de solicitações", "Organização", "Resolução de problemas"],
+      },
+      {
+        title: "Use exemplos concretos",
+        paragraphs: ["Em vez de escrever apenas “sou comunicativo”, mostre atividades que exigiam contato com clientes e acompanhamento de solicitações.", "Resultados como redução de espera ou volume de atendimentos só devem aparecer quando você conhece os dados."],
+      },
+      {
+        title: "Prepare uma versão simples",
+        paragraphs: ["Use títulos claros, texto selecionável e palavras relacionadas à vaga. Evite colocar informações importantes apenas em imagens.", "Revise telefone, e-mail e datas antes de enviar o PDF."],
+      },
+    ],
+    faqs: [
+      { question: "Atendimento informal pode entrar?", answer: "Sim, se for verdadeiro e identificado como atividade informal ou autônoma." },
+      { question: "Preciso ter experiência para ser atendente?", answer: "Não necessariamente. Cursos, projetos e experiências com público podem demonstrar competências transferíveis." },
+    ],
+  },
+
+] as Array<Guide | undefined>).filter((guide): guide is Guide => Boolean(guide));
+
+export const guides: Guide[] = [
+  ...originalGuides.filter((guide): guide is Guide => Boolean(guide)),
+  ...extraGuides,
+];
 
 export function getGuide(slug: string) {
   return guides.find((guide) => guide.slug === slug);
