@@ -231,3 +231,57 @@
     top: 0 !important;
   }
 }
+
+
+/* Currículo sem marcadores visuais. */
+.resume-sheet section.resume-education > p,
+.resume-sheet section.resume-courses > p,
+.resume-sheet section.resume-experience > p,
+.resume-sheet section.resume-experience > p:nth-of-type(odd) {
+  padding-left: 0 !important;
+}
+
+.resume-sheet section.resume-education > p::before,
+.resume-sheet section.resume-courses > p::before,
+.resume-sheet section.resume-courses > p:nth-of-type(odd)::before,
+.resume-sheet section.resume-experience > p::before,
+.resume-sheet section.resume-experience > p:nth-of-type(odd)::before {
+  content: none !important;
+  display: none !important;
+}
+
+.resume-sheet .skill-list {
+  padding-left: 0 !important;
+}
+
+.resume-sheet .skill-list span {
+  display: block !important;
+  list-style: none !important;
+}
+
+@media print {
+  body.resume-print-active .resume-sheet section.resume-education > p,
+  body.resume-print-active .resume-sheet section.resume-courses > p,
+  body.resume-print-active .resume-sheet section.resume-experience > p,
+  body.resume-print-active .resume-sheet section.resume-experience > p:nth-of-type(odd) {
+    padding-left: 0 !important;
+  }
+
+  body.resume-print-active .resume-sheet section.resume-education > p::before,
+  body.resume-print-active .resume-sheet section.resume-courses > p::before,
+  body.resume-print-active .resume-sheet section.resume-courses > p:nth-of-type(odd)::before,
+  body.resume-print-active .resume-sheet section.resume-experience > p::before,
+  body.resume-print-active .resume-sheet section.resume-experience > p:nth-of-type(odd)::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  body.resume-print-active .resume-sheet .skill-list {
+    padding-left: 0 !important;
+  }
+
+  body.resume-print-active .resume-sheet .skill-list span {
+    display: block !important;
+    list-style: none !important;
+  }
+}
