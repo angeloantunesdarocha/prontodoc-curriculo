@@ -1,6 +1,6 @@
 import { guides as originalGuides, type Guide } from "./data";
 
-const extraGuides: Guide[] = [
+const extraGuides = [
   {
     slug: "curriculo-jovem-aprendiz",
     title: "Currículo para Jovem Aprendiz: modelo e passo a passo",
