@@ -1,6 +1,6 @@
 import { guides as originalGuides, type Guide } from "./data";
 
-const extraGuides = [
+const extraGuides = ([
   {
     slug: "curriculo-jovem-aprendiz",
     title: "Currículo para Jovem Aprendiz: modelo e passo a passo",
@@ -408,7 +408,7 @@ const extraGuides = [
     ],
   },
 
-];
+] as Array<Guide | undefined>).filter((guide): guide is Guide => Boolean(guide));
 
 export const guides: Guide[] = [
   ...originalGuides.filter((guide): guide is Guide => Boolean(guide)),
