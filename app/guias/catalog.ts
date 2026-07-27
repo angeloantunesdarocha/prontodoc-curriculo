@@ -410,7 +410,10 @@ const extraGuides = [
 
 ];
 
-export const guides: Guide[] = [...originalGuides, ...extraGuides];
+export const guides: Guide[] = [
+  ...originalGuides.filter((guide): guide is Guide => Boolean(guide)),
+  ...extraGuides,
+];
 
 export function getGuide(slug: string) {
   return guides.find((guide) => guide.slug === slug);
