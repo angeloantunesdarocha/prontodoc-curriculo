@@ -317,3 +317,26 @@
     text-indent: 0 !important;
   }
 }
+
+
+.resume-sheet section.resume-experience > p.experience-title {
+  font-weight: 750 !important;
+  margin-top: 14px !important;
+}
+
+.resume-sheet section.resume-experience > p.experience-description {
+  font-weight: 400 !important;
+  margin-top: 4px !important;
+}
+
+@media print {
+  body.resume-print-active .resume-sheet section.resume-experience > p.experience-title {
+    font-weight: 750 !important;
+    margin-top: 3.5mm !important;
+  }
+
+  body.resume-print-active .resume-sheet section.resume-experience > p.experience-description {
+    font-weight: 400 !important;
+    margin-top: 1mm !important;
+  }
+}
