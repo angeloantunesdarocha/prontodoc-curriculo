@@ -302,3 +302,18 @@
     text-indent: 0 !important;
   }
 }
+
+
+.resume-sheet section.resume-objective > p {
+  margin-left: 0 !important;
+  padding: 0 !important;
+  text-indent: 0 !important;
+}
+
+@media print {
+  body.resume-print-active .resume-sheet section.resume-objective > p {
+    margin-left: 0 !important;
+    padding: 0 !important;
+    text-indent: 0 !important;
+  }
+}
