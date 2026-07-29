@@ -624,7 +624,7 @@ export default function Home() {
       <section className="hero" id="inicio">
         <div className="hero-copy">
           <span className="eyebrow">✦ Um currículo diferente para cada oportunidade</span>
-          <h1>Um Crie seu currículo grátis pelo celular</h1>
+          <h1>Crie seu currículo grátis pelo celular</h1>
           <p className="hero-text">
             Conte sua história por voz, mostre a vaga e receba uma versão ATS e outra
             visual — com foto somente quando fizer sentido.
