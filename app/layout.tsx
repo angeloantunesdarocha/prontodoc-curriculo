@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
   title: {
-    default: "ProntoDoc — Currículo profissional pelo celular",
+    default: "Currículo Grátis pelo Celular — Crie e Baixe em PDF | ProntoDoc",
     template: "%s | ProntoDoc",
   },
   description: SITE_DESCRIPTION,
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     siteName: SITE_NAME,
     url: SITE_URL,
-    title: "ProntoDoc — Currículo e entrevista pelo celular",
+    title: "Currículo Grátis pelo Celular — Crie e Baixe em PDF",
     description: SITE_DESCRIPTION,
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "ProntoDoc — Currículo e entrevista pelo celular" }],
   },
