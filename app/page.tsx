@@ -573,19 +573,28 @@ export default function Home() {
   async function startCheckout(plan: PlanId) {
     setCheckoutLoading(plan);
     setNotice("");
+    
+    const planUrls: Record<PlanId, string> = {
+      pdf: "https://www.mercadopago.com.br/link-tools/details/c84b3dd0-e80b-450f-81cb-f272e3412536",
+      versions: "https://www.mercadopago.com.br/link-tools/details/0e0720e6-bb63-47bd-9722-179174128ab2",
+      kit: "https://www.mercadopago.com.br/link-tools/details/f72a223f-9367-4b3d-8239-2305def62e14",
+      interview: "https://www.mercadopago.com.br/link-tools/details/2b96f0f7-37c6-4cce-a74c-40200ab33216",
+      vacancy: "https://www.mercadopago.com.br/link-tools/details/2f9ea6bf-8fb3-474f-93d2-0ff9e131a5bb",
+      journey: "https://www.mercadopago.com.br/link-tools/details/80694f34-d7f5-4186-986d-ef28d7627f6b",
+    };
+    
     try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, email: resume.email }),
-      });
-      const result = (await response.json()) as { checkoutUrl?: string; error?: string };
-      if (!response.ok || !result.checkoutUrl) {
-        throw new Error(result.error || "Não foi possível iniciar o pagamento.");
-      }
-      window.location.assign(result.checkoutUrl);
+      // Salva o plano selecionado no localStorage para liberação após pagamento
+      window.localStorage.setItem("prontodoc-pending-plan", JSON.stringify({ 
+        plan, 
+        email: resume.email,
+        timestamp: Date.now() 
+      }));
+      
+      // Redireciona diretamente para o checkout do Mercado Pago
+      window.location.href = planUrls[plan];
     } catch (error) {
-      setNotice(error instanceof Error ? error.message : "Não foi possível iniciar o pagamento.");
+      setNotice("Não foi possível iniciar o pagamento. Tente novamente.");
       setCheckoutLoading(null);
     }
   }
