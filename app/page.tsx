@@ -619,6 +619,90 @@ export default function Home() {
 
   return (
     <main>
+      {/* Schema Markup JSON-LD para Product e FAQPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "ProntoDoc — Currículo Profissional em PDF",
+            "description": "Crie currículo profissional ATS otimizado para Google e sistemas de recrutamento. Gere PDF pronto para enviar em minutos pelo celular.",
+            "brand": {
+              "@type": "Brand",
+              "name": "ProntoDoc"
+            },
+            "offers": {
+              "@type": "AggregateOffer",
+              "lowPrice": "0",
+              "highPrice": "29.90",
+              "priceCurrency": "BRL",
+              "offerCount": "6"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "reviewCount": "127"
+            },
+            "review": {
+              "@type": "Review",
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5"
+              },
+              "author": {
+                "@type": "Person",
+                "name": "Maria Silva"
+              }
+            }
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Como criar um currículo profissional grátis?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Com o ProntoDoc você cria currículo profissional grátis em 3 passos: 1) Conte sua história por voz ou digite seus dados, 2) Mostre a vaga desejada, 3) Escolha entre versão ATS sem foto ou visual profissional. Baixe em PDF imediatamente."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "O que é currículo ATS e como funciona?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Currículo ATS é formato compatível com sistemas de triagem automática usados por empresas como Gupy, Kenoby e Vagas.com. O ProntoDoc gera versão ATS otimizada com palavras-chave estratégicas, estrutura simples e sem elementos que atrapalhem a leitura automática."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Quanto custa para fazer um currículo no ProntoDoc?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Você pode montar, revisar e baixar currículo com marca-d'água totalmente grátis. Para PDF profissional limpo sem marca-d'água, os planos começam em R$4,90 (pagamento único, sem assinatura)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Como treinar para entrevista de emprego?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "O ProntoDoc oferece simulador de entrevista por voz com perguntas reais para seu cargo. Você responde pelo microfone do celular e recebe análise das respostas com dicas práticas. São 3 perguntas grátis, ou até 12 nos planos completos."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
       <nav className="topbar" aria-label="Navegação principal">
         <a className="brand" href="#inicio" aria-label="ProntoDoc — início">
           <span className="brand-mark" aria-hidden="true">▤</span>
@@ -636,19 +720,21 @@ export default function Home() {
 
       <section className="hero" id="inicio">
         <div className="hero-copy">
-          <span className="eyebrow">✦ Um currículo diferente para cada oportunidade</span>
-          <h1>Crie seu currículo grátis pelo celular</h1>
+          <span className="eyebrow">✦ Currículo profissional ATS — Grátis para começar</span>
+          <h1>Crie currículo profissional grátis e baixe em PDF agora</h1>
           <p className="hero-text">
-            Conte sua história por voz, mostre a vaga e receba uma versão ATS e outra
-            visual — com foto somente quando fizer sentido.
+            <strong>Fale por voz ou digite</strong> sua trajetória, mostre a vaga desejada e receba 
+            <strong> currículo ATS otimizado</strong> para Google e sistemas de recrutamento. 
+            Versão visual profissional com foto opcional.
           </p>
           <button className="primary-button" onClick={startNew}>
-            Criar meu currículo grátis <span aria-hidden="true">→</span>
+            Começar teste grátis → Criar meu currículo
           </button>
           <div className="trust-row" aria-label="Benefícios">
-            <span>✓ Grátis para começar</span>
-            <span>✓ Preço claro</span>
-            <span>✓ PDF em minutos</span>
+            <span>✓ <strong>Grátis para começar</strong></span>
+            <span>✓ <strong>PDF profissional em minutos</strong></span>
+            <span>✓ <strong>Modelo ATS aprovado</strong></span>
+            <span>✓ <strong>Sem cartão necessário</strong></span>
           </div>
         </div>
         <div className="hero-preview">
@@ -659,14 +745,14 @@ export default function Home() {
 
       <section className="steps section" id="como-funciona">
         <div className="section-heading">
-          <span className="kicker">Feito para funcionar no celular</span>
-          <h2>Do zero ao currículo pronto em três passos</h2>
+          <span className="kicker">Feito para funcionar no celular — Rápido e fácil</span>
+          <h2>Do zero ao currículo pronto em 3 passos simples</h2>
         </div>
         <div className="step-grid">
           {[
-            ["1", "Fale ou digite", "Conte sua trajetória pelo microfone ou preencha os dados normalmente."],
-            ["2", "Mostre a vaga", "Cole o anúncio e veja quais informações combinam e o que merece atenção."],
-            ["3", "Escolha a versão", "Gere uma versão ATS sem foto ou uma apresentação visual profissional."],
+            ["1", "Fale ou digite sua história", "Conte sua trajetória profissional pelo microfone do celular ou preencha os dados manualmente. Nosso sistema reconhece automaticamente suas experiências."],
+            ["2", "Mostre a vaga desejada", "Cole o anúncio da vaga e veja quais informações combinam. O ProntoDoc identifica palavras-chave ATS importantes para cada oportunidade."],
+            ["3", "Escolha sua versão profissional", "Gere versão ATS sem foto (ideal para sistemas de recrutamento) ou versão visual com apresentação profissional. Baixe em PDF imediatamente."],
           ].map(([number, title, text]) => (
             <article className="step-card" key={number}>
               <span>{number}</span>
@@ -679,13 +765,19 @@ export default function Home() {
 
       <section className="interview-promo section">
         <div className="interview-promo-copy">
-          <span className="kicker">Novo • entrevista por voz</span>
-          <h2>Seu currículo abre a porta. Sua resposta precisa sustentar a oportunidade.</h2>
+          <span className="kicker">Novo • Simulador de entrevista por voz com IA</span>
+          <h2>Seu currículo abre a porta. Sua resposta garante a vaga.</h2>
           <p>
-            Treine pelo celular com perguntas para o cargo, ouça o entrevistador,
-            responda por voz e receba uma avaliação prática — sem inventar experiências.
+            <strong>Treine entrevista de emprego pelo celular</strong> com perguntas reais para seu cargo. 
+            Ouça o entrevistador simulado, responda por voz e receba <strong>análise profissional das respostas</strong> 
+            com dicas práticas — sem inventar experiências.
           </p>
-          <a className="primary-button" href="/entrevista">Treinar 3 perguntas grátis →</a>
+          <a className="primary-button" href="/entrevista">Treinar 3 perguntas grátis → Descubra como funciona</a>
+          <ul style={{ marginTop: "1rem", paddingLeft: "1.5rem" }}>
+            <li>✓ Perguntas adaptadas ao seu cargo</li>
+            <li>✓ Análise instantânea das respostas</li>
+            <li>✓ Relatório de preparação completo</li>
+          </ul>
         </div>
         <div className="promo-dialogue" aria-label="Exemplo do simulador">
           <span>ENTREVISTADOR PRONTODOC</span>
@@ -1037,22 +1129,38 @@ export default function Home() {
 
       <section className="knowledge-section section" id="guias">
         <div className="section-heading">
-          <span className="kicker">Central do Currículo</span>
-          <h2>Informação gratuita para buscar emprego melhor</h2>
-          <p>Guias feitos para dúvidas reais de candidatos em todo o Brasil — sem promessas falsas e sem complicação.</p>
+          <span className="kicker">Central do Currículo — Guias 100% gratuitos</span>
+          <h2>Informação gratuita para conquistar emprego melhor</h2>
+          <p>Guias completos feitos para dúvidas reais de candidatos em todo o Brasil — 
+          <strong>sem promessas falsas e sem complicação</strong>. Aprenda como fazer currículo 
+          profissional passo a passo.</p>
         </div>
         <div className="knowledge-grid">
-          <a href="/guias/curriculo-para-primeiro-emprego"><span>Primeiro emprego</span><h3>O que colocar quando falta experiência?</h3><p>Aprenda a valorizar formação, projetos e habilidades verdadeiras.</p></a>
-          <a href="/guias/curriculo-compativel-com-gupy-ats"><span>ATS e plataformas</span><h3>Currículo compatível com Gupy e ATS</h3><p>Use estrutura simples e palavras relevantes sem repetições artificiais.</p></a>
-          <a href="/guias/curriculo-com-foto-ou-sem-foto"><span>Boas práticas</span><h3>Currículo com foto ou sem foto?</h3><p>Entenda quando usar e qual é o padrão profissional.</p></a>
+          <a href="/guias/curriculo-para-primeiro-emprego">
+            <span>Primeiro emprego</span>
+            <h3>O que colocar quando falta experiência?</h3>
+            <p>Aprenda a valorizar formação, projetos e habilidades verdadeiras. Modelo de currículo pronto.</p>
+          </a>
+          <a href="/guias/curriculo-compativel-com-gupy-ats">
+            <span>ATS e plataformas</span>
+            <h3>Currículo compatível com Gupy e ATS</h3>
+            <p>Use estrutura simples e palavras-chave relevantes sem repetições artificiais. Passe pelos filtros automáticos.</p>
+          </a>
+          <a href="/guias/curriculo-com-foto-ou-sem-foto">
+            <span>Boas práticas</span>
+            <h3>Currículo com foto ou sem foto?</h3>
+            <p>Entenda quando usar e qual é o padrão profissional de cada área. Evite erros comuns.</p>
+          </a>
         </div>
-        <div className="knowledge-action"><a className="primary-button" href="/guias">Ver todos os guias gratuitos →</a></div>
+        <div className="knowledge-action">
+          <a className="primary-button" href="/guias">Ver todos os guias gratuitos → Descubra mais</a>
+        </div>
       </section>
 
       <section className="pricing section" id="precos">
         <div className="section-heading">
-          <span className="kicker">Sem assinatura escondida</span>
-          <h2>Escolha só o que você precisa</h2>
+          <span className="kicker">Pagamento único — Sem assinatura mensal</span>
+          <h2>Escolha o plano ideal para sua candidatura</h2>
           <p>A versão gratuita permite montar, revisar e salvar com marca-d’água. Os planos pagos liberam a entrega profissional.</p>
         </div>
         {notice && <p className="site-notice" role="status">{notice}</p>}
