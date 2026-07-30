@@ -1045,13 +1045,16 @@ export default function Home() {
         {notice && <p className="site-notice" role="status">{notice}</p>}
         <div className="price-grid">
           {[
-            { id: "", name: "Grátis", price: "R$ 0", text: "Monte, visualize e baixe com marca-d’água", action: "Começar grátis" },
+            { id: "", name: "Grátis", price: "R$ 0", text: "Monte, visualize e baixe com marca-d'água", action: "Começar grátis" },
             { id: "pdf", name: "PDF Profissional", price: "R$ 4,90", text: "Uma versão limpa e pronta para enviar", action: "Comprar com Mercado Pago" },
             { id: "versions", name: "3 versões", price: "R$ 9,90", text: "Versões ATS, formal e direta", action: "Comprar com Mercado Pago" },
             { id: "kit", name: "Kit Candidatura", price: "R$ 14,90", text: "Currículo, carta e mensagem para WhatsApp", action: "Comprar o kit" },
+            { id: "interview", name: "Entrevista Completa", price: "R$ 9,90", text: "Simulação com até 12 perguntas e relatório", action: "Treinar entrevista" },
+            { id: "vacancy", name: "Preparação para a Vaga", price: "R$ 19,90", text: "Currículo adaptado + entrevista direcionada", action: "Preparar agora" },
+            { id: "journey", name: "Jornada de Contratação", price: "R$ 29,90", text: "Tudo incluso: 3 entrevistas + kit completo", action: "Quero tudo isso" },
           ].map(({ id, name, price, text, action }, index) => (
-            <article className={`price-card ${index === 3 ? "featured" : ""}`} key={name}>
-              {index === 3 && <span className="popular">Melhor escolha</span>}
+            <article className={`price-card ${index === 5 ? "featured" : ""}`} key={name}>
+              {index === 5 && <span className="popular">Mais completo</span>}
               <h3>{name}</h3>
               <strong>{price}</strong>
               <p>{text}</p>
