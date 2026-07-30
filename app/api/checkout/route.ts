@@ -8,7 +8,8 @@ export async function POST(request: Request) {
       return Response.json({ error: "Plano inválido." }, { status: 400 });
     }
 
-    const plan = plans[payload.plan as PlanId];
+    const planId: PlanId = payload.plan;
+    const plan = plans[planId];
     const email =
       typeof payload.email === "string" && payload.email.includes("@")
         ? payload.email.trim().slice(0, 160)
