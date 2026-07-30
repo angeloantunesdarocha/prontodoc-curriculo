@@ -14,13 +14,9 @@ export async function POST(request: Request) {
         ? payload.email.trim().slice(0, 160)
         : null;
 
-    // Os novos produtos usam Links de Pagamento criados diretamente pelo
-    // vendedor no Mercado Pago. A resposta imediata evita depender das
-    // credenciais da API para abrir o checkout no celular.
-    if (
-      ["interview", "vacancy", "journey"].includes(payload.plan) &&
-      plan.fallbackUrl
-    ) {
+    // Todos os produtos usam Links de Pagamento criados diretamente pelo
+    // vendedor no Mercado Pago para redirecionamento imediato ao checkout.
+    if (plan.fallbackUrl) {
       return Response.json({
         mode: "payment_link",
         checkoutUrl: plan.fallbackUrl,
