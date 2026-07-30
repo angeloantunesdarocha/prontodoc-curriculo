@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     const token = getMercadoPagoToken();
 
     if (!token) {
-      if (!plan.fallbackUrl) {
+  if (!(plan as any).fallbackUrl) {
         return Response.json(
           { error: "O pagamento deste produto está temporariamente indisponível." },
           { status: 503 },
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       }
       return Response.json({
         mode: "payment_link",
-        checkoutUrl: plan.fallbackUrl,
+        checkoutUrl: (plan as any).fallbackUrl,
         message: "Checkout seguro pelo Link de Pagamento.",
       });
     }
