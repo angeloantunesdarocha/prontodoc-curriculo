@@ -1,5 +1,5 @@
 import { getMercadoPagoToken } from "../../../lib/mercadopago";
-import { isPlanId, plans, SITE_URL } from "../../../lib/plans";
+import { isPlanId, plans, SITE_URL, type PlanId } from "../../../lib/plans";
 
 export async function POST(request: Request) {
   try {
@@ -8,7 +8,7 @@ export async function POST(request: Request) {
       return Response.json({ error: "Plano inválido." }, { status: 400 });
     }
 
-    const plan = plans[payload.plan];
+    const plan = plans[payload.plan as PlanId];
     const email =
       typeof payload.email === "string" && payload.email.includes("@")
         ? payload.email.trim().slice(0, 160)

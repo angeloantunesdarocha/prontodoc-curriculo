@@ -1,0 +1,17 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.8.2
+2 info using node@v20.19.5
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/workspace/.npmrc
+5 silly config load:file:/root/.npmrc
+6 silly config load:file:/usr/etc/npmrc
+7 verbose title npm config get registry
+8 verbose argv "config" "get" "registry"
+9 verbose logfile logs-max:10 dir:/workspace/.sites-runtime/npm-cache/_logs/2026-07-30T04_15_40_142Z-
+10 verbose logfile /workspace/.sites-runtime/npm-cache/_logs/2026-07-30T04_15_40_142Z-debug-0.log
+11 verbose cwd /workspace
+12 verbose os Linux 4.19.91-c8dfc93.al7.x86_64
+13 verbose node v20.19.5
+14 verbose npm  v10.8.2
+15 verbose exit 0
+16 info ok
