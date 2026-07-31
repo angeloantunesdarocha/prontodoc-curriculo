@@ -16,7 +16,7 @@ export const plans = {
     title: "ProntoDoc — 3 versões do currículo",
     description: "Três versões profissionais adaptadas para diferentes oportunidades",
     amount: 9.9,
-    fallbackUrl: "https://mpago.la/1A5QAR6",
+    fallbackUrl: "https://mpago.la/1uaXJCr",
   },
   kit: {
     id: "kit",
