@@ -79,24 +79,6 @@ export default function GuidesPage() {
         ))}
       </section>
 
-      <section className="article-layout" aria-labelledby="todos-os-guias">
-        <div className="article-header">
-          <span className="kicker">Biblioteca completa</span>
-          <h2 id="todos-os-guias">Todos os guias publicados</h2>
-          <p>{guides.length} conteúdos com exemplos, cuidados de privacidade e próximos passos práticos.</p>
-        </div>
-        <div className="guide-grid" aria-label="Guias disponíveis">
-          {guides.map((guide) => (
-            <article className="guide-card" key={guide.slug}>
-              <span>{guide.category} · {guide.readingTime}</span>
-              <h2><Link href={`/guias/${guide.slug}`}>{guide.title}</Link></h2>
-              <p>{guide.description}</p>
-              <Link className="text-link" href={`/guias/${guide.slug}`}>Ler guia completo →</Link>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <aside className="content-cta">
         <h2>Pronto para transformar orientação em candidatura?</h2>
         <p>Crie pelo celular, compare com a vaga e escolha uma versão ATS ou visual.</p>
