@@ -1216,6 +1216,10 @@ export default function Home() {
         <details><summary>Como salvo em PDF?</summary><p>Toque em “Baixar em PDF” e escolha “Salvar como PDF” na tela de impressão. O plano gratuito inclui marca-d’água; os planos pagos liberam o PDF limpo.</p></details>
         <details><summary>Quando recebo minha compra?</summary><p>Com o pagamento aprovado pelo Mercado Pago, você volta ao ProntoDoc e os recursos do plano são liberados automaticamente neste aparelho.</p></details>
         <details><summary>Posso treinar uma entrevista?</summary><p>Sim. A Entrevista ProntoDoc oferece três perguntas grátis e planos com até 12 perguntas, análise das respostas e preparação direcionada à vaga.</p></details>
+        <details><summary>O que é um currículo ATS e por que preciso dele?</summary><p>Currículo ATS é otimizado para sistemas de triagem automática que 85% das empresas usam. Sem essa otimização, seu currículo pode ser rejeitado antes mesmo de um recrutador humano ler.</p></details>
+        <details><summary>Quanto tempo leva para criar um currículo no ProntoDoc?</summary><p>Em média 10-15 minutos. Você pode falar sua trajetória pelo microfone do celular e nosso sistema organiza automaticamente no formato profissional correto.</p></details>
+        <details><summary>Preciso pagar para baixar meu currículo?</summary><p>A versão gratuita permite criar e baixar com marca-d'água. Para o PDF profissional sem marca, temos planos a partir de R$ 4,90 (pagamento único, sem assinatura).</p></details>
+        <details><summary>Meu currículo funciona na Gupy e outras plataformas?</summary><p>Sim! O ProntoDoc gera currículo no formato ATS compatível com Gupy, Kenoby, Vagas.com, LinkedIn e todos os principais sistemas de recrutamento.</p></details>
       </section>
 
       <footer><a className="brand" href="#inicio"><span className="brand-mark">▤</span>ProntoDoc</a><p>Currículos claros para oportunidades reais.</p><span>© 2026 ProntoDoc</span></footer>

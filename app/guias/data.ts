@@ -420,6 +420,271 @@ export const guides: Guide[] = [
     ],
     faqs: [{ question: "Posso perguntar o salário?", answer: "Sim. Faça de forma objetiva e profissional quando a faixa ainda não estiver clara." }, { question: "E se eu não tiver perguntas?", answer: "Você pode confirmar as próximas etapas, mas preparar pelo menos uma dúvida relevante costuma ser útil." }],
   },
+  {
+    slug: "o-que-e-curriculo-ats",
+    title: "O que é currículo ATS e como funciona em 2026",
+    description: "Entenda o que é currículo ATS, como os sistemas de triagem automática funcionam e como passar neles.",
+    category: "ATS e plataformas",
+    readingTime: "7 min",
+    intro: "Currículo ATS é um documento otimizado para ser lido por sistemas de triagem automática (Applicant Tracking Systems) que empresas como Gupy, Kenoby e Vagas.com usam para filtrar candidatos antes da leitura humana.",
+    sections: [
+      {
+        title: "O que é currículo ATS?",
+        paragraphs: ["Currículo ATS é um documento otimizado para ser lido por sistemas de triagem automática (Applicant Tracking Systems) que empresas como Gupy, Kenoby e Vagas.com usam para filtrar candidatos antes da leitura humana. Esses sistemas leem seu currículo em segundos e atribuem uma nota de compatibilidade com a vaga baseada em palavras-chave, estrutura e clareza das informações."],
+      },
+      {
+        title: "Como o ATS lê seu currículo?",
+        paragraphs: ["O sistema ATS escaneia seu currículo em busca de: palavras-chave da descrição da vaga, estrutura de tópicos clara (sem tabelas ou colunas complexas), datas de experiência formatadas corretamente, e informações de contato identificáveis. Currículos com design muito elaborado, gráficos, ícones ou fotos podem ser ignorados parcial ou totalmente pelo sistema."],
+        bullets: ["Palavras-chave específicas da vaga (habilidades, ferramentas, certificações)", "Estrutura simples e legível (sem tabelas, colunas ou elementos gráficos)", "Datas de experiência no formato mês/ano", "Informações de contato completas (nome, e-mail, telefone, LinkedIn)", "Experiências profissionais em ordem cronológica reversa"],
+      },
+      {
+        title: "Como passar no ATS da Gupy e outras plataformas?",
+        paragraphs: ["Para passar no ATS, use palavras-chave exatas da descrição da vaga, mantenha o currículo em uma ou duas colunas simples, evite cabeçalhos e rodapés complexos, salve em PDF (não em imagem), e revise se todas as seções estão legíveis. O ProntoDoc ATS já gera seu currículo nesse formato automaticamente."],
+      },
+    ],
+    faqs: [
+      { question: "O que é currículo ATS?", answer: "Currículo ATS é um documento otimizado para ser lido por sistemas de triagem automática (Applicant Tracking Systems) que empresas usam para filtrar candidatos. Esses sistemas leem seu currículo em segundos e atribuem uma nota de compatibilidade com a vaga baseada em palavras-chave e estrutura." },
+      { question: "Como passar no ATS da Gupy?", answer: "Para passar no ATS da Gupy, use palavras-chave exatas da descrição da vaga, mantenha o currículo em estrutura simples sem tabelas ou colunas complexas, evite elementos gráficos, salve em PDF e revise se todas as seções estão legíveis." },
+      { question: "Currículo ATS deve ter foto?", answer: "Não coloque foto em currículos para ATS. Sistemas de triagem automática podem ter dificuldade para ler o documento quando há imagem, e muitas empresas têm políticas de diversidade que recomendam currículo sem foto." },
+    ],
+  },
+  {
+    slug: "curriculo-com-ou-sem-foto",
+    title: "Currículo com foto ou sem foto: o que os recrutadores preferem",
+    description: "Saiba quando usar foto no currículo e qual a preferência dos recrutadores brasileiros.",
+    category: "Boas práticas",
+    readingTime: "6 min",
+    intro: "A regra geral é: não coloque foto no currículo para vagas no Brasil, exceto se a vaga exigir explicitamente ou se for para áreas como modelos, atores ou recepcionista de hotelaria.",
+    sections: [
+      {
+        title: "Currículo deve ter foto ou não?",
+        paragraphs: ["A regra geral é: não coloque foto no currículo para vagas no Brasil, exceto se a vaga exigir explicitamente ou se for para áreas como modelos, atores, recepcionista de hotelaria ou cargos que envolvam atendimento ao público com imagem institucional. Para 95% das vagas, currículo sem foto é o padrão profissional e evita viés inconsciente na triagem."],
+      },
+      {
+        title: "Quando colocar foto no currículo?",
+        paragraphs: ["Coloque foto apenas quando: o anúncio da vaga solicitar explicitamente, você for trabalhar em áreas que exigem apresentação visual (modelagem, atuação, recepcionista de hotelaria de luxo), ou for candidatura para vagas no exterior onde foto é comum (Alemanha, França, alguns países da Ásia). Mesmo assim, use foto profissional com fundo neutro e roupa adequada."],
+        bullets: ["Recepção e hotelaria", "Aviação (comissários)", "Modelagem e atuação", "Marketing e relações públicas (dependendo da vaga)"],
+      },
+      {
+        title: "Setores que geralmente NÃO querem foto",
+        paragraphs: ["Administrativo e financeiro, Tecnologia e TI, Engenharia, Vendas e comércio, Educação e Saúde (exceto estética) são setores que normalmente não solicitam foto no currículo."],
+        bullets: ["Administrativo e financeiro", "Tecnologia e TI", "Engenharia", "Vendas e comércio", "Educação", "Saúde (exceto estética)"],
+      },
+      {
+        title: "Foto no currículo ATS: pode?",
+        paragraphs: ["Não coloque foto em currículos para ATS. Sistemas de triagem automática podem ter dificuldade para ler o documento quando há imagem, e algumas empresas brasileiras têm políticas de diversidade que recomendam currículo sem foto para evitar viés. Use a versão sem foto para candidaturas online e a versão com foto apenas quando solicitado."],
+      },
+    ],
+    faqs: [
+      { question: "Quando devo colocar foto no currículo?", answer: "Apenas quando a vaga solicitar explicitamente ou para áreas que exigem apresentação visual como modelagem, atuação ou hotelaria de luxo." },
+      { question: "Foto no currículo ATS pode?", answer: "Não. Não coloque foto em currículos para ATS pois os sistemas podem ter dificuldade para ler o documento e muitas empresas têm políticas de diversidade que recomendam currículo sem foto." },
+      { question: "Que tipo de foto usar no currículo?", answer: "Use foto profissional com fundo neutro, rosto e ombros visíveis, iluminação uniforme e expressão natural. Evite filtros, óculos escuros e selfies." },
+    ],
+  },
+  {
+    slug: "como-fazer-curriculo-primeiro-emprego",
+    title: "Como fazer currículo de primeiro emprego sem experiência",
+    description: "Aprenda a criar um currículo forte para o primeiro emprego destacando formação, cursos e habilidades.",
+    category: "Primeiro emprego",
+    readingTime: "7 min",
+    intro: "Para primeiro emprego, destaque formação escolar, cursos extracurriculares, trabalhos voluntários, projetos pessoais e habilidades comportamentais em vez de focar em experiência profissional.",
+    sections: [
+      {
+        title: "Como fazer currículo de primeiro emprego?",
+        paragraphs: ["Para primeiro emprego, destaque formação escolar, cursos extracurriculares, trabalhos voluntários, projetos pessoais e habilidades comportamentais em vez de focar em experiência profissional. Use um objetivo claro mostrando disposição para aprender, inclua atividades que demonstrem responsabilidade (mesmo que não remuneradas), e mantenha o currículo em uma página com linguagem profissional."],
+      },
+      {
+        title: "O que colocar no currículo sem experiência?",
+        paragraphs: ["Sem experiência formal, inclua: objetivo profissional específico (não use 'crescer na empresa'), formação escolar completa (incluindo previsão de conclusão), cursos online ou presenciais (mesmo que gratuitos), participação em grêmio estudantil, projetos acadêmicos relevantes, trabalho voluntário, e habilidades como pacote Office, inglês, comunicação e trabalho em equipe."],
+        bullets: ["Formação: Ensino Médio, técnico, graduação (mesmo cursando)", "Cursos: Informática, idiomas, atendimento, vendas (qualquer um conta)", "Atividades: Grêmio, monitoria, projetos sociais, bicos informais", "Habilidades: Digitação, Excel, comunicação, proatividade", "Realizações: Prêmios escolares, competições, certificações"],
+      },
+      {
+        title: "Exemplo de objetivo para primeiro emprego",
+        paragraphs: ['"Busco oportunidade como Jovem Aprendiz na área administrativa para aplicar conhecimentos de organização e atendimento, contribuindo com dedicação e aprendizado rápido enquanto desenvolvo competências profissionais."'],
+      },
+      {
+        title: "Primeiro emprego: modelo que funciona",
+        paragraphs: ["Use estrutura simples com: dados de contato no topo, objetivo de 2-3 linhas, formação educacional, cursos complementares, habilidades técnicas e comportamentais, e atividades extracurriculares. Não invente experiências e seja honesto sobre seu nível de conhecimento. O ProntoDoc tem modelo específico para primeiro emprego que já inclui essas seções."],
+      },
+    ],
+    faqs: [
+      { question: "Como fazer currículo de primeiro emprego?", answer: "Destaque formação escolar, cursos extracurriculares, trabalhos voluntários, projetos pessoais e habilidades comportamentais. Use um objetivo claro e mantenha o currículo em uma página." },
+      { question: "O que colocar no objetivo do currículo?", answer: "Use um objetivo profissional específico indicando a área ou cargo desejado. Exemplo: 'Busco oportunidade como Jovem Aprendiz na área administrativa'." },
+      { question: "Trabalho informal conta no primeiro currículo?", answer: "Sim. Trabalhos informais verdadeiros podem ser incluídos descrevendo a atividade, período e responsabilidades, indicando que foi autônomo ou informal." },
+    ],
+  },
+  {
+    slug: "quantas-paginas-ter-curriculo",
+    title: "Quantas páginas deve ter um currículo profissional",
+    description: "Descubra o tamanho ideal do currículo e como organizar as informações de forma eficiente.",
+    category: "Boas práticas",
+    readingTime: "5 min",
+    intro: "Um currículo profissional deve ter preferencialmente uma página, especialmente para candidatos com até 10 anos de experiência. Duas páginas são aceitáveis para perfis mais seniores ou com muitas publicações e projetos relevantes.",
+    sections: [
+      {
+        title: "Qual o tamanho ideal do currículo?",
+        paragraphs: ["Um currículo profissional deve ter preferencialmente uma página, especialmente para candidatos com até 10 anos de experiência. Duas páginas são aceitáveis para perfis mais seniores ou com muitas publicações e projetos relevantes. Recrutadores gastam em média 6-7 segundos na primeira leitura, então seja direto e relevante."],
+      },
+      {
+        title: "Quando usar duas páginas?",
+        paragraphs: ["Use duas páginas apenas se: você tem mais de 10 anos de experiência relevante, possui muitas publicações ou projetos técnicos importantes, ou está candidatando-se para posições acadêmicas ou científicas. Mesmo assim, priorize as informações mais recentes e relevantes."],
+        bullets: ["Até 10 anos de experiência: 1 página", "Mais de 10 anos: máximo 2 páginas", "Posições acadêmicas: pode estender para CV completo", "Priorize experiências dos últimos 5-10 anos"],
+      },
+      {
+        title: "Como reduzir o currículo para uma página?",
+        paragraphs: ["Elimine experiências muito antigas ou irrelevantes, resuma descrições longas, remova hobbies genéricos, use formatação compacta (margens menores, fonte 10-11pt), e foque apenas nas informações essenciais para a vaga desejada."],
+      },
+    ],
+    faqs: [
+      { question: "Quantas páginas deve ter um currículo?", answer: "Preferencialmente uma página para até 10 anos de experiência. Máximo de duas páginas para perfis seniores ou acadêmicos." },
+      { question: "Currículo de duas páginas é ruim?", answer: "Não necessariamente. Duas páginas são aceitáveis para profissionais com mais de 10 anos de experiência relevante ou posições acadêmicas." },
+      { question: "Como deixar o currículo mais curto?", answer: "Elimine experiências antigas, resuma descrições, remova informações irrelevantes e use formatação compacta com margens menores e fonte 10-11pt." },
+    ],
+  },
+  {
+    slug: "como-passar-gupy-ats",
+    title: "Como passar no currículo da Gupy e outros ATS",
+    description: "Dicas práticas para otimizar seu currículo e aumentar as chances de passar pelos sistemas de triagem.",
+    category: "ATS e plataformas",
+    readingTime: "8 min",
+    intro: "Para passar no ATS da Gupy e outras plataformas, use palavras-chave exatas da descrição da vaga, mantenha estrutura simples e evite elementos que dificultem a leitura automática.",
+    sections: [
+      {
+        title: "Entenda como a Gupy funciona",
+        paragraphs: ["A Gupy usa um sistema ATS que analisa seu currículo em busca de compatibilidade com a vaga. O sistema lê palavras-chave, estrutura do documento, datas formatadas corretamente e informações de contato. Currículos com tabelas complexas, gráficos ou imagens podem ter problemas de leitura."],
+      },
+      {
+        title: "Dicas para passar no ATS",
+        paragraphs: ["Use palavras-chave exatas da descrição da vaga, mantenha o currículo em uma ou duas colunas simples, evite cabeçalhos e rodapés complexos, salve em PDF (não em imagem), e revise se todas as seções estão legíveis. Preencha também os campos da plataforma manualmente quando solicitado."],
+        bullets: ["Copie palavras-chave da descrição da vaga", "Use estrutura simples sem tabelas complexas", "Salve em PDF com texto selecionável", "Preencha campos da plataforma manualmente", "Revise contatos e informações obrigatórias"],
+      },
+      {
+        title: "Erros comuns que eliminam no ATS",
+        paragraphs: ["Incluir foto quando não solicitado, usar tabelas ou colunas complexas, salvar como imagem em vez de PDF, ter informações de contato incompletas, e não preencher campos obrigatórios da plataforma são erros que podem eliminar sua candidatura automaticamente."],
+      },
+    ],
+    faqs: [
+      { question: "Como passar no ATS da Gupy?", answer: "Use palavras-chave da vaga, estrutura simples sem tabelas, salve em PDF, preencha campos da plataforma e revise informações de contato." },
+      { question: "Qual formato de arquivo usar na Gupy?", answer: "PDF com texto selecionável. Não envie imagens ou arquivos em formatos editáveis como DOC quando puder evitar." },
+      { question: "Preciso repetir palavras-chave várias vezes?", answer: "Não. Use termos relevantes naturalmente apenas quando representarem sua experiência real. Repetição artificial pode prejudicar." },
+    ],
+  },
+  {
+    slug: "o-que-colocar-objetivo-curriculo",
+    title: "O que colocar no objetivo do currículo",
+    description: "Aprenda a escrever um objetivo profissional claro e específico que atraia recrutadores.",
+    category: "Boas práticas",
+    readingTime: "5 min",
+    intro: "O objetivo do currículo deve ser específico e direto, indicando o cargo ou área desejada. Evite frases genéricas como 'crescer na empresa' e foque no que você pode oferecer.",
+    sections: [
+      {
+        title: "Qual a ordem correta das informações no currículo?",
+        paragraphs: ["A ordem correta das informações no currículo é: dados de contato (nome, telefone, e-mail, LinkedIn, cidade), objetivo profissional (2-3 linhas), formação acadêmica, experiências profissionais (da mais recente para a mais antiga), cursos complementares e habilidades técnicas."],
+      },
+      {
+        title: "Como escrever um objetivo eficaz",
+        paragraphs: ["Seja específico indicando cargo ou área, mencione 1-2 habilidades relevantes, mostre como pode contribuir e mantenha em 2-3 linhas. Exemplo: 'Busco oportunidade como auxiliar administrativo para aplicar conhecimentos em organização de documentos e atendimento, contribuindo com eficiência e aprendizado constante.'"],
+        bullets: ["Indique cargo ou área específica", "Mencione 1-2 habilidades principais", "Mostre como pode contribuir", "Mantenha em 2-3 linhas", "Adapte para cada vaga"],
+      },
+      {
+        title: "Erros comuns no objetivo",
+        paragraphs: ["Usar frases genéricas como 'crescer na empresa', colocar objetivos múltiplos ou muito amplos, escrever textos longos demais, e não adaptar o objetivo para a vaga são erros que diminuem o impacto do seu currículo."],
+      },
+    ],
+    faqs: [
+      { question: "O que colocar no objetivo do currículo?", answer: "Indique o cargo ou área desejada, mencione 1-2 habilidades relevantes e mostre como pode contribuir. Mantenha em 2-3 linhas específicas." },
+      { question: "Qual a ordem correta das informações?", answer: "Dados de contato, objetivo, formação acadêmica, experiências profissionais (cronológica reversa), cursos e habilidades." },
+      { question: "Devo mudar o objetivo para cada vaga?", answer: "Sim. Adaptar o objetivo para cada vaga mostra interesse específico e aumenta suas chances de ser selecionado." },
+    ],
+  },
+  {
+    slug: "melhor-fonte-para-curriculo",
+    title: "Qual fonte usar no currículo profissional",
+    description: "Descubra as melhores fontes para currículo e como formatar seu documento de forma profissional.",
+    category: "Boas práticas",
+    readingTime: "4 min",
+    intro: "As melhores fontes para currículo profissional são Arial, Calibri, Helvetica, Times New Roman e Roboto, em tamanho 10-12pt para texto e 14-16pt para títulos.",
+    sections: [
+      {
+        title: "Melhores fontes para currículo",
+        paragraphs: ["As melhores fontes para currículo profissional são Arial, Calibri, Helvetica, Times New Roman e Roboto. Estas fontes são amplamente aceitas, fáceis de ler e compatíveis com sistemas ATS. Use tamanho 10-12pt para texto corrido e 14-16pt para títulos e cabeçalhos."],
+        bullets: ["Arial - limpa e moderna", "Calibri - padrão Microsoft, muito legível", "Helvetica - profissional e elegante", "Times New Roman - clássica e tradicional", "Roboto - moderna e digital-friendly"],
+      },
+      {
+        title: "Formatação profissional",
+        paragraphs: ["Mantenha consistência na formatação: use a mesma fonte em todo o documento, aplique negrito apenas em títulos e cargos, use itálico com moderação para instituições ou datas, e garanta bom contraste entre texto e fundo."],
+      },
+      {
+        title: "O que evitar na formatação",
+        paragraphs: ["Evite fontes decorativas ou difíceis de ler (Comic Sans, Papyrus, etc.), cores muito vibrantes, tamanhos menores que 10pt, excesso de negrito ou itálico, e formatação inconsistente entre seções."],
+      },
+    ],
+    faqs: [
+      { question: "Qual a melhor fonte para currículo?", answer: "Arial, Calibri, Helvetica, Times New Roman ou Roboto são as melhores opções. Use tamanho 10-12pt para texto e 14-16pt para títulos." },
+      { question: "Posso usar fontes diferentes?", answer: "Não. Mantenha a mesma fonte em todo o currículo para garantir consistência e profissionalismo." },
+      { question: "Qual tamanho de fonte usar?", answer: "10-12pt para texto corrido e 14-16pt para títulos e cabeçalhos. Nunca use menos que 10pt." },
+    ],
+  },
+  {
+    slug: "perguntas-entrevista-emprego",
+    title: "Quais perguntas caem na entrevista de emprego",
+    description: "Conheça as perguntas mais comuns em entrevistas e aprenda a responder de forma eficaz.",
+    category: "Entrevista",
+    readingTime: "8 min",
+    intro: "As perguntas mais comuns em entrevistas incluem 'Fale sobre você', 'Por que devemos te contratar?', 'Quais seus pontos fortes e fracos?' e questões sobre experiências passadas.",
+    sections: [
+      {
+        title: "Perguntas mais frequentes",
+        paragraphs: ["As perguntas mais comuns em entrevistas incluem: 'Fale sobre você', 'Por que devemos te contratar?', 'Quais seus pontos fortes e fracos?', 'Como você lida com pressão?', 'Conte sobre um desafio que superou' e 'Por que quer trabalhar aqui?'. Prepare respostas estruturadas para cada uma."],
+        bullets: ["Fale sobre você", "Por que devemos te contratar?", "Pontos fortes e fracos", "Como lida com pressão/conflitos", "Conte sobre um desafio superado", "Por que quer trabalhar aqui", "Onde se vê em 5 anos"],
+      },
+      {
+        title: "Como se preparar para entrevista",
+        paragraphs: ["Pesquise sobre a empresa, revise sua experiência e conquistas, prepare exemplos concretos usando o método STAR (Situação, Tarefa, Ação, Resultado), pratique respostas em voz alta, e prepare perguntas para fazer ao recrutador."],
+      },
+      {
+        title: "Dicas para responder bem",
+        paragraphs: ["Seja honesto e específico, use exemplos reais, conecte suas respostas às necessidades da vaga, mantenha postura positiva mesmo ao falar de desafios, e demonstre entusiasmo pela oportunidade."],
+      },
+    ],
+    faqs: [
+      { question: "Quais perguntas caem na entrevista?", answer: "As mais comuns são: 'Fale sobre você', 'Por que devemos te contratar?', 'Pontos fortes e fracos', 'Como lida com pressão' e 'Por que quer trabalhar aqui?'." },
+      { question: "Como se preparar para entrevista?", answer: "Pesquise a empresa, revise sua experiência, prepare exemplos concretos, pratique respostas e prepare perguntas para o recrutador." },
+      { question: "O que é o método STAR?", answer: "STAR significa Situação, Tarefa, Ação, Resultado. É uma técnica para estruturar respostas com exemplos concretos de experiências passadas." },
+    ],
+  },
+  {
+    slug: "como-fazer-curriculo-profissional",
+    title: "Como fazer currículo profissional: guia completo 2026",
+    description: "Guia definitivo para criar um currículo profissional que passa em ATS e impressiona recrutadores.",
+    category: "Guia completo",
+    readingTime: "15 min",
+    intro: "Este guia completo ensina tudo sobre como fazer um currículo profissional: desde a estrutura correta até otimização para ATS, passando por dicas de formatação, conteúdo e estratégias para diferentes situações.",
+    sections: [
+      {
+        title: "Estrutura básica do currículo",
+        paragraphs: ["Um currículo profissional deve conter: dados de contato completos, objetivo profissional específico, formação acadêmica, experiências profissionais em ordem cronológica reversa, cursos complementares e habilidades técnicas. Mantenha o documento em 1-2 páginas com formatação limpa e profissional."],
+        bullets: ["Dados de contato: nome, telefone, e-mail, LinkedIn, cidade", "Objetivo: 2-3 linhas específicas", "Formação: instituição, curso, ano de conclusão", "Experiências: cargo, empresa, período, 3-5 realizações", "Cursos: nome, instituição, carga horária", "Habilidades: ferramentas, idiomas, competências técnicas"],
+      },
+      {
+        title: "Otimização para ATS",
+        paragraphs: ["Para passar nos sistemas de triagem automática: use palavras-chave da descrição da vaga, mantenha estrutura simples sem tabelas complexas, evite elementos gráficos excessivos, salve em PDF com texto selecionável, e não use foto a menos que solicitado."],
+      },
+      {
+        title: "Dicas por situação profissional",
+        paragraphs: ["Para primeiro emprego: destaque formação, cursos e atividades. Para mudança de área: enfatize habilidades transferíveis. Para seniores: foque em conquistas e liderança. Para desempregados: mantenha currículo atualizado e use rede de contatos."],
+      },
+      {
+        title: "Erros comuns a evitar",
+        paragraphs: ["Não inclua informações pessoais desnecessárias (CPF, RG, estado civil), não minta sobre experiências ou habilidades, evite erros de português, não use e-mail não profissional, e não envie o mesmo currículo para todas as vagas sem adaptação."],
+      },
+    ],
+    faqs: [
+      { question: "Qual o modelo de currículo os recrutadores preferem?", answer: "Modelo simples, limpo, com estrutura clara e otimizado para ATS. Priorize conteúdo relevante sobre design elaborado." },
+      { question: "O que colocar no currículo quando não tem experiência?", answer: "Destaque formação, cursos, projetos, voluntariado, habilidades e atividades que demonstrem responsabilidade e capacidade de aprendizado." },
+      { question: "Como adaptar o currículo para cada vaga?", answer: "Leia a descrição da vaga, identifique palavras-chave e requisitos, e ajuste objetivo, experiências e habilidades para destacar o que é mais relevante para aquela posição específica." },
+    ],
+  },
 ];
 
 export function getGuide(slug: string) {
