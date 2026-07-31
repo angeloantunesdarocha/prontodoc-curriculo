@@ -115,9 +115,6 @@ export default async function GuidePage({ params }: PageProps) {
           <span className="kicker">{guide.category} · {guide.readingTime} de leitura</span>
           <h1>{guide.title}</h1>
           <p>{guide.intro}</p>
-          <p className="privacy-note">
-            Por <Link href="/autor/angelo-antunes"><strong>{AUTHOR_NAME}</strong></Link> · Revisado em 24 de julho de 2026 · Conteúdo educativo
-          </p>
           <div className="article-actions">
             <Link className="primary-button" href="/#editor">Criar currículo grátis</Link>
             <Link className="secondary-button" href="/entrevista">Treinar entrevista</Link>
