@@ -23,7 +23,7 @@ export const plans = {
     title: "ProntoDoc — Kit Candidatura",
     description: "Currículo, carta de apresentação e mensagem para WhatsApp",
     amount: 14.9,
-    fallbackUrl: "https://mpago.la/1A5QAR6",
+    fallbackUrl: "https://mpago.la/2kUdyqW",
   },
   interview: {
     id: "interview",
