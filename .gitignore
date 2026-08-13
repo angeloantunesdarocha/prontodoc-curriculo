@@ -1,2 +1,15 @@
-.vercel
+# Dependências e builds
+node_modules/
+.next/
+dist/
+
+# Ambientes e caches locais
+.vercel/
+.sites-runtime/
+.wrangler/
 .env*
+*.log
+
+# Relatórios e artefatos locais
+coverage/
+.DS_Store
