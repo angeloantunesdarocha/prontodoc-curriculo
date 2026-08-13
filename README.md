@@ -13,15 +13,15 @@ vagas e simulação de entrevistas. O projeto inclui:
 
 ## Publicação
 
-O mesmo código está preparado para dois ambientes:
+O mesmo código mantém dois comandos de build por compatibilidade operacional:
 
 - **ChatGPT Sites:** `npm run build`
 - **Vercel:** `npm run build:vercel`
 
-No Vercel, configure `NEXT_PUBLIC_SITE_URL` com a URL de produção. A variável
-secreta `MERCADO_PAGO_ACCESS_TOKEN` é opcional: sem ela, o site usa os links de
-pagamento já configurados; com ela, também pode criar preferências pelo Checkout
-Pro.
+Para o checkout seguro, a operação oficial é a Vercel com Next.js e Checkout Pro.
+Configure `NEXT_PUBLIC_SITE_URL` com a URL pública da aplicação e as variáveis
+server-only descritas na seção de checkout abaixo. Sem essas variáveis, o checkout
+retorna indisponível; não existe fallback por link de pagamento ou liberação manual.
 
 Nunca salve tokens ou arquivos `.env` no GitHub.
 
