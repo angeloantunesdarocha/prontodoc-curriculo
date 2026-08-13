@@ -1,13 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Mantido temporariamente até a correção completa da base legada.
+  // O typecheck separado deve continuar sendo executado no CI.
   typescript: {
-    // Permite o deploy no Vercel ignorando erros de tipagem
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    // Evita travamentos por avisos do ESLint no build
-    ignoreDuringBuilds: true,
   },
 };
 
