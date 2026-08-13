@@ -1220,19 +1220,7 @@ export default function Home() {
             </article>
           ))}
         </div>
-        <div className="payment-help">
-          <strong>Já realizou o pagamento?</strong>
-          <p>
-            Enquanto a confirmação automática está sendo ativada, envie o comprovante
-            e o e-mail usado na compra para receber a liberação.
-          </p>
-          <a
-            className="secondary-button"
-            href="mailto:angeloantunesdarocha@gmail.com?subject=Comprovante%20ProntoDoc&body=Ol%C3%A1%2C%20segue%20meu%20comprovante%20do%20ProntoDoc.%0A%0APlano%3A%0AE-mail%20usado%20no%20pagamento%3A%0AN%C3%BAmero%20da%20opera%C3%A7%C3%A3o%3A"
-          >
-            Enviar comprovante por e-mail
-          </a>
-        </div>
+        <p className="privacy-note">O pagamento é confirmado automaticamente pelo Mercado Pago. Após a aprovação, o ProntoDoc valida o pedido no servidor e libera os recursos do plano.</p>
       </section>
 
       <section className="faq section" id="duvidas">
