@@ -372,9 +372,35 @@ export default function Home() {
     const storedEntitlement = window.localStorage.getItem("prontodoc-entitlement");
     if (storedEntitlement) {
       try {
-        const parsed = JSON.parse(storedEntitlement) as { plan?: PlanId };
-        if (parsed.plan && ["pdf", "versions", "kit", "interview", "vacancy", "journey"].includes(parsed.plan)) {
-          queueMicrotask(() => setEntitlement(parsed.plan ?? null));
+        const parsed = JSON.parse(storedEntitlement) as {
+          plan?: PlanId;
+          order?: string;
+          accessToken?: string;
+        };
+        if (
+          parsed.plan &&
+          parsed.order &&
+          parsed.accessToken &&
+          ["pdf", "versions", "kit", "interview", "vacancy", "journey"].includes(parsed.plan)
+        ) {
+          void fetch(
+            `/api/orders/status?${new URLSearchParams({
+              order: parsed.order,
+              access_token: parsed.accessToken,
+            })}`,
+            { cache: "no-store" },
+          )
+            .then((response) => response.json())
+            .then((result: { approved?: boolean; plan?: PlanId }) => {
+              if (result.approved && result.plan === parsed.plan) {
+                setEntitlement(parsed.plan ?? null);
+              } else {
+                window.localStorage.removeItem("prontodoc-entitlement");
+              }
+            })
+            .catch(() => window.localStorage.removeItem("prontodoc-entitlement"));
+        } else {
+          window.localStorage.removeItem("prontodoc-entitlement");
         }
       } catch {
         window.localStorage.removeItem("prontodoc-entitlement");
