@@ -129,9 +129,34 @@ export default function InterviewSimulator() {
 
   useEffect(() => {
     try {
-      const stored = JSON.parse(localStorage.getItem("prontodoc-entitlement") || "{}") as { plan?: PlanId };
-      if (stored.plan) setEntitlement(stored.plan);
-    } catch { /* armazenamento opcional */ }
+      const stored = JSON.parse(localStorage.getItem("prontodoc-entitlement") || "{}") as {
+        plan?: PlanId;
+        order?: string;
+        accessToken?: string;
+      };
+      if (stored.plan && stored.order && stored.accessToken) {
+        void fetch(
+          `/api/orders/status?${new URLSearchParams({
+            order: stored.order,
+            access_token: stored.accessToken,
+          })}`,
+          { cache: "no-store" },
+        )
+          .then((response) => response.json())
+          .then((result: { approved?: boolean; plan?: PlanId }) => {
+            if (result.approved && result.plan === stored.plan) {
+              setEntitlement(stored.plan ?? null);
+            } else {
+              localStorage.removeItem("prontodoc-entitlement");
+            }
+          })
+          .catch(() => localStorage.removeItem("prontodoc-entitlement"));
+      } else if (stored.plan) {
+        localStorage.removeItem("prontodoc-entitlement");
+      }
+    } catch {
+      localStorage.removeItem("prontodoc-entitlement");
+    }
 
     const cachedAudio = audioCacheRef.current;
     return () => {
