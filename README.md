@@ -13,15 +13,15 @@ vagas e simulação de entrevistas. O projeto inclui:
 
 ## Publicação
 
-O mesmo código está preparado para dois ambientes:
+O mesmo código mantém dois comandos de build por compatibilidade operacional:
 
 - **ChatGPT Sites:** `npm run build`
 - **Vercel:** `npm run build:vercel`
 
-No Vercel, configure `NEXT_PUBLIC_SITE_URL` com a URL de produção. A variável
-secreta `MERCADO_PAGO_ACCESS_TOKEN` é opcional: sem ela, o site usa os links de
-pagamento já configurados; com ela, também pode criar preferências pelo Checkout
-Pro.
+Para o checkout seguro, a operação oficial é a Vercel com Next.js e Checkout Pro.
+Configure `NEXT_PUBLIC_SITE_URL` com a URL pública da aplicação e as variáveis
+server-only descritas na seção de checkout abaixo. Sem essas variáveis, o checkout
+retorna indisponível; não existe fallback por link de pagamento ou liberação manual.
 
 Nunca salve tokens ou arquivos `.env` no GitHub.
 
@@ -131,3 +131,24 @@ The timeout defaults can be overridden for a controlled canary with `SITES_INSTA
 
 - [vinext Documentation](https://github.com/cloudflare/vinext)
 - [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+
+
+## Checkout seguro em produção
+
+A branch de preparação usa pedidos persistidos no Supabase e Checkout Pro do Mercado Pago. Configure no ambiente de produção:
+
+- `SUPABASE_URL`: URL do projeto Supabase do ProntoDoc;
+- `SUPABASE_SECRET_KEY`: chave secreta do Supabase, exclusivamente no servidor;
+- `MERCADO_PAGO_ACCESS_TOKEN`: token de produção do Mercado Pago;
+- `MERCADO_PAGO_WEBHOOK_SECRET`: assinatura secreta configurada no painel do Mercado Pago;
+- `NEXT_PUBLIC_SITE_URL`: URL pública definitiva do site.
+
+Configure o webhook de pagamentos para:
+
+```
+https://prontodoc-curriculo.vercel.app/api/mercadopago/webhook
+```
+
+A confirmação do pagamento valida assinatura, pedido, produto e valor antes de liberar o recurso. O cliente não deve ser autorizado somente por valores armazenados no navegador.
+
+Nunca publique `SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `MERCADO_PAGO_ACCESS_TOKEN` ou `MERCADO_PAGO_WEBHOOK_SECRET`.

@@ -9,42 +9,36 @@ export const plans = {
     title: "ProntoDoc — PDF Profissional",
     description: "Currículo profissional em PDF, pronto para enviar às empresas",
     amount: 4.9,
-    fallbackUrl: "https://mpago.la/1A5QAR6",
   },
   versions: {
     id: "versions",
     title: "ProntoDoc — 3 versões do currículo",
     description: "Três versões profissionais adaptadas para diferentes oportunidades",
     amount: 9.9,
-    fallbackUrl: "https://mpago.la/1uaXJCr",
   },
   kit: {
     id: "kit",
     title: "ProntoDoc — Kit Candidatura",
     description: "Currículo, carta de apresentação e mensagem para WhatsApp",
     amount: 14.9,
-    fallbackUrl: "https://mpago.la/2kUdyqW",
   },
   interview: {
     id: "interview",
     title: "ProntoDoc — Entrevista Completa",
     description: "Simulação com até 12 perguntas e relatório de preparação",
     amount: 9.9,
-    fallbackUrl: "https://mpago.la/2ikME5o",
   },
   vacancy: {
     id: "vacancy",
     title: "ProntoDoc — Preparação para a Vaga",
     description: "Currículo adaptado, entrevista direcionada e relatório",
     amount: 19.9,
-    fallbackUrl: "https://mpago.la/1KvZ1DY",
   },
   journey: {
     id: "journey",
     title: "ProntoDoc — Jornada de Contratação",
     description: "Três entrevistas, currículo, carta e mensagem para WhatsApp",
     amount: 29.9,
-    fallbackUrl: "https://mpago.la/1pZUVJS",
   },
 } as const;
 

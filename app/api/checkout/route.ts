@@ -1,4 +1,6 @@
 import { getMercadoPagoToken } from "../../../lib/mercadopago";
+import { insertOrder, updateOrderByExternalReference } from "../../../lib/supabase-admin";
+import { createAccessToken } from "../../../lib/order-access";
 import { isPlanId, plans, SITE_URL, type PlanId } from "../../../lib/plans";
 
 export async function POST(request: Request) {
@@ -8,40 +10,35 @@ export async function POST(request: Request) {
       return Response.json({ error: "Plano inválido." }, { status: 400 });
     }
 
+    const token = getMercadoPagoToken();
+    if (!token) {
+      return Response.json(
+        { error: "O pagamento ainda não está configurado para produção." },
+        { status: 503 },
+      );
+    }
+
     const planId: PlanId = payload.plan;
     const plan = plans[planId];
     const email =
-      typeof payload.email === "string" && payload.email.includes("@")
+      typeof payload.email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)
         ? payload.email.trim().slice(0, 160)
         : null;
 
-    // Todos os produtos usam Links de Pagamento criados diretamente pelo
-    // vendedor no Mercado Pago para redirecionamento imediato ao checkout.
-    if (plan.fallbackUrl) {
-      return Response.json({
-        mode: "payment_link",
-        checkoutUrl: plan.fallbackUrl,
-        message: "Checkout seguro pelo Link de Pagamento.",
-      });
-    }
+    const externalReference = `prontodoc_${planId}_${crypto.randomUUID()}`;
+    const { token: accessToken, hash: accessTokenHash } = createAccessToken();
 
-    const token = getMercadoPagoToken();
+    await insertOrder({
+      plan_id: planId,
+      customer_email: email,
+      amount: plan.amount,
+      external_reference: externalReference,
+      access_token_hash: accessTokenHash,
+    });
 
-    if (!token) {
-  if (!(plan as any).fallbackUrl) {
-        return Response.json(
-          { error: "O pagamento deste produto está temporariamente indisponível." },
-          { status: 503 },
-        );
-      }
-      return Response.json({
-        mode: "payment_link",
-        checkoutUrl: (plan as any).fallbackUrl,
-        message: "Checkout seguro pelo Link de Pagamento.",
-      });
-    }
-
-    const orderId = `prontodoc_${payload.plan}_${crypto.randomUUID()}`;
+    const successUrl = new URL("/sucesso", SITE_URL);
+    successUrl.searchParams.set("order", externalReference);
+    successUrl.searchParams.set("access_token", accessToken);
 
     const preferenceResponse = await fetch(
       "https://api.mercadopago.com/checkout/preferences",
@@ -50,12 +47,12 @@ export async function POST(request: Request) {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
-          "X-Idempotency-Key": orderId,
+          "X-Idempotency-Key": externalReference,
         },
         body: JSON.stringify({
           items: [
             {
-              id: payload.plan,
+              id: plan.id,
               title: plan.title,
               description: plan.description,
               quantity: 1,
@@ -64,11 +61,11 @@ export async function POST(request: Request) {
             },
           ],
           payer: email ? { email } : undefined,
-          external_reference: orderId,
-          metadata: { order_id: orderId, plan: payload.plan },
+          external_reference: externalReference,
+          metadata: { order_id: externalReference, plan: planId },
           back_urls: {
-            success: `${SITE_URL}/sucesso?order=${orderId}`,
-            pending: `${SITE_URL}/sucesso?order=${orderId}&pending=1`,
+            success: successUrl.toString(),
+            pending: successUrl.toString(),
             failure: `${SITE_URL}/?pagamento=cancelado#precos`,
           },
           auto_return: "approved",
@@ -81,13 +78,7 @@ export async function POST(request: Request) {
     if (!preferenceResponse.ok) {
       const detail = await preferenceResponse.text();
       console.error("Mercado Pago preference error", preferenceResponse.status, detail);
-      if (plan.fallbackUrl) {
-        return Response.json({
-          mode: "payment_link",
-          checkoutUrl: plan.fallbackUrl,
-          message: "Usando o Link de Pagamento seguro.",
-        });
-      }
+      await updateOrderByExternalReference(externalReference, { status: "rejected" });
       return Response.json(
         { error: "Não foi possível abrir o pagamento. Tente novamente em instantes." },
         { status: 502 },
@@ -98,11 +89,20 @@ export async function POST(request: Request) {
       id?: string;
       init_point?: string;
     };
-    if (!preference.init_point) throw new Error("Checkout não retornado.");
+
+    if (!preference.init_point) {
+      await updateOrderByExternalReference(externalReference, { status: "rejected" });
+      throw new Error("Checkout não retornado.");
+    }
+
+    await updateOrderByExternalReference(externalReference, {
+      status: "pending_payment",
+      mercado_pago_preference_id: preference.id ?? null,
+    });
 
     return Response.json({
       mode: "checkout_pro",
-      orderId,
+      orderId: externalReference,
       checkoutUrl: preference.init_point,
     });
   } catch (error) {
